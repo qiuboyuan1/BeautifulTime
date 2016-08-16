@@ -15,6 +15,7 @@ import com.qiu.beautifultime.R;
 import com.qiu.beautifultime.data.ItemTimeData;
 import com.qiu.beautifultime.item.TimeItemTouchHelperCallback;
 import com.qiu.beautifultime.ui.activity.BeautifulTimeChooseActivity;
+import com.qiu.beautifultime.ui.activity.SettingActivity;
 import com.qiu.beautifultime.ui.adapter.TimeItemRecycleViewAdapter;
 
 import java.util.ArrayList;
@@ -85,7 +86,7 @@ public class BeautifulTimeNotesFragment extends AbsBaseFragment implements View.
         switch (v.getId()) {
             case R.id.days_icon_set_normal:
                 //设置图标
-
+                startActivity(new Intent(sContext, SettingActivity.class));
                 break;
             case R.id.home_record_mine_life_time_tv:
                 //点击记录

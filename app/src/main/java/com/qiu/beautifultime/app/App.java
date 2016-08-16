@@ -10,6 +10,8 @@ import android.content.Context;
 public class App extends Application {
     private static Context sContext;
 
+    public static final String GESTURE_KEY="gesture_key";
+
     @Override
     public void onCreate() {
         super.onCreate();
