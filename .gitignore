@@ -1,3 +1,5 @@
+
+### Android template
 # Built application files
 *.apk
 *.ap_
@@ -38,3 +40,4 @@ captures/
 
 # Keystore files
 *.jks
+
