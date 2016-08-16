@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.qiu.beautifultime.R;
 import com.qiu.beautifultime.data.ItemTimeData;
 import com.qiu.beautifultime.data.SetPictureData;
+import com.qiu.beautifultime.tools.SensorImg;
 import com.qiu.beautifultime.ui.adapter.OneRecyclerViewAdapter;
 import com.qiu.beautifultime.ui.adapter.TimeItemRecycleViewAdapter;
 
