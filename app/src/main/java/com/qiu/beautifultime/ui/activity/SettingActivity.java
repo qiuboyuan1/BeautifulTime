@@ -99,7 +99,7 @@ public class SettingActivity extends AbsBaseActivity implements View.OnClickList
                 }
                 break;
             case R.id.setting_password:
-                startActivity(new Intent(SettingActivity.this, SetGestureLockActivity.class));
+                startActivity(new Intent(SettingActivity.this, LockActivity.class));
                 break;
             case R.id.setting_play_video:
                 Intent intent = new Intent(SettingActivity.this, VideoActivity.class);

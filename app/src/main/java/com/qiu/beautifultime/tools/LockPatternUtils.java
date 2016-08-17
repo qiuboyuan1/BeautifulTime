@@ -3,60 +3,63 @@ package com.qiu.beautifultime.tools;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.preference.PreferenceManager;
 
 /**
  * 手势密码设置
- * @author zhang
  *
+ * @author zhang
  */
 public class LockPatternUtils {
-	public static String loginKey="login_key";
-	
-	/**
-	 * 保存设置的手势密码,使用时应当这里做了加密再保存
-	 * @param locks
-	 */
-	public static void saveLockPattern(Context context, String key, String locks){
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(context);
-		Editor edit = prefs.edit();
-		edit.putString(key, locks);
-		edit.commit();
-	}
-	/**
-	 * 读取手势密码
-	 * @param context
-	 * @param key
-	 * @return
-	 */
-	public static String getLockPattern(Context context, String key){
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(context);
-		return prefs.getString(key, null);
-	}
+    private static SharedPreferences sp;
+    private static Editor editor;
 
-	
-	/**
-	 * 设置登录
-	 * @param context
-	 * @param isLogin
-	 */
-	public static void setLogin(Context context, boolean isLogin){
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(context);
-		Editor edit = prefs.edit();
-		edit.putBoolean(loginKey, isLogin);
-		edit.commit();
-	}
-	/**
-	 * 获取是否登录
-	 * @param context
-	 * @return
-	 */
-	public static boolean  isLogin(Context context){
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(context);
-		return prefs.getBoolean(loginKey, false);
-	}
+    public static void CSHSp(Context context) {
+        sp = context.getSharedPreferences("login", Context.MODE_APPEND);
+        editor = sp.edit();
+    }
+
+    /**
+     * 保存设置的手势密码,使用时应当这里做了加密再保存
+     *
+     * @param locks
+     */
+    public static void saveLockPattern(String key, String locks) {
+        editor.putString(key, locks);
+        editor.commit();
+    }
+
+    /**
+     * 读取手势密码
+     *
+     * @param
+     * @param key
+     * @return
+     */
+    public static String getLockPattern(String key) {
+        return sp.getString(key, null);
+    }
+
+
+    /**
+     * 设置登录
+     *
+     * @param
+     * @param isLogin
+     */
+    public static boolean setLogin(boolean isLogin) {
+        editor.putBoolean("login_key", isLogin);
+        editor.commit();
+        return isLogin;
+    }
+
+    /**
+     * 获取是否登录
+     *
+     * @param
+     * @return
+     */
+    public static boolean isLogin() {
+        return sp.getBoolean("login_key", false);
+    }
+
 }

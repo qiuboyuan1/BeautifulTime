@@ -42,7 +42,7 @@ public class CheckoutGestureLockActivity extends AbsBaseActivity {
         animation.setDuration(50);
         animation.setRepeatCount(2);
         animation.setRepeatMode(Animation.REVERSE);
-        String key = LockPatternUtils.getLockPattern(this, App.GESTURE_KEY);
+        String key = LockPatternUtils.getLockPattern(App.GESTURE_KEY);
         if (TextUtils.isEmpty(key)) {
             finish();
         } else {
@@ -55,22 +55,22 @@ public class CheckoutGestureLockActivity extends AbsBaseActivity {
                     textview.setTextColor(Color.parseColor("#FFFFFF"));
                     textview.setVisibility(View.VISIBLE);
                     textview.setText("登陆成功");
-                    textview.startAnimation(animation);
+//                    textview.startAnimation(animation);
                     startActivity(new Intent(CheckoutGestureLockActivity.this, MainActivity.class));
                     finish();
                 } else {
-                    errorNum++;
-                    if (errorNum >= limitErrorNum) {
-                        Toast.makeText(getApplicationContext(), "密码输入错误" + limitErrorNum + "次请重新绘制", Toast.LENGTH_SHORT).show();
-                        LockPatternUtils.setLogin(getApplicationContext(), false);
-                        LockPatternUtils.saveLockPattern(getApplicationContext(), App.GESTURE_KEY, "");
-                        startActivity(new Intent(CheckoutGestureLockActivity.this, SetGestureLockActivity.class));
-                        finish();
-                    }
-                    textview.setTextColor(Color.parseColor("#FF2525"));
-                    textview.setVisibility(View.VISIBLE);
-                    textview.setText("密码输入错误" + errorNum + "次");
-                    textview.startAnimation(animation);
+//                    errorNum++;
+//                    if (errorNum >= limitErrorNum) {
+                        Toast.makeText(getApplicationContext(), "密码输入错误" , Toast.LENGTH_SHORT).show();
+//                        LockPatternUtils.setLogin(false);
+//                        LockPatternUtils.saveLockPattern(App.GESTURE_KEY, "");
+//                        startActivity(new Intent(CheckoutGestureLockActivity.this, SetGestureLockActivity.class));
+//                        finish();
+//                    }
+//                    textview.setTextColor(Color.parseColor("#FF2525"));
+//                    textview.setVisibility(View.VISIBLE);
+//                    textview.setText("密码输入错误" + errorNum + "次");
+//                    textview.startAnimation(animation);
 
                 }
             }

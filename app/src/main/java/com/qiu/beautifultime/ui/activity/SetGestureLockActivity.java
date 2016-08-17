@@ -1,6 +1,7 @@
 package com.qiu.beautifultime.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -64,10 +65,10 @@ public class SetGestureLockActivity extends AbsBaseActivity {
                         gestureLockView.setKey(key);
                         isSetting = true;
                     } else {
-                        gv_textview.setTextColor(getResources().getColor(R.color.white));
+                        gv_textview.setTextColor(Color.WHITE);
                         gv_textview.setText("设置成功");
-                        LockPatternUtils.saveLockPattern(getApplicationContext(), App.GESTURE_KEY, key);
-                        startActivity(new Intent(SetGestureLockActivity.this, CheckoutGestureLockActivity.class));
+                        LockPatternUtils.saveLockPattern(App.GESTURE_KEY, key);
+//                        startActivity(new Intent(SetGestureLockActivity.this, CheckoutGestureLockActivity.class));
                         finish();
                     }
 
@@ -77,7 +78,7 @@ public class SetGestureLockActivity extends AbsBaseActivity {
                     else
                         gv_textview.setText("至少需要连接" + limitNum + "个点,请重试");
                     gv_textview.startAnimation(animation);
-                    gv_textview.setTextColor(getResources().getColor(R.color.red));
+                    gv_textview.setTextColor(Color.RED);
                 }
 
             }
