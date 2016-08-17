@@ -15,7 +15,7 @@ import android.widget.Toast;
  */
 public class ShowAnimation {
     private boolean asd = true;
-    //    private TimeCount  timeCount;
+        private TimeCount  timeCount;
     private ImageView imageView;
     private LinearLayout LlEdit, LlDownload, LlDelete, LlNew;
 
@@ -25,7 +25,7 @@ public class ShowAnimation {
         this.LlDownload = LlDownload;
         this.LlDelete = LlDelete;
         this.LlNew = LlNew;
-//        timeCount = new TimeCount(1800, 1000);
+        timeCount = new TimeCount(1800, 1000);
     }
 
     public void setImageView(ImageView imageView) {
@@ -35,7 +35,7 @@ public class ShowAnimation {
 
     public void ShowView() {
 
-        Log.d("ShowAnimation", "asd:" + asd);
+
         if (asd) {
             AnimatorSet set = new AnimatorSet();
             set.playTogether(
@@ -58,7 +58,7 @@ public class ShowAnimation {
             );
             set3.setDuration(1800).start();
             asd = false;
-//            timeCount.start();
+            timeCount.start();
         } else {
             AnimatorSet set = new AnimatorSet();
             set.playTogether(
@@ -84,22 +84,22 @@ public class ShowAnimation {
         }
     }
 
-//    class TimeCount extends CountDownTimer {
-//
-//        public TimeCount(long millisInFuture, long countDownInterval) {
-//            super(millisInFuture, countDownInterval);
-//        }
-//
-//        @Override
-//        public void onTick(long millisUntilFinished) {
-//            imageView.setClickable(false);
-//        }
-//
-//        @Override
-//        public void onFinish() {
-//            imageView.setClickable(true);
-//        }
-//    }
+    class TimeCount extends CountDownTimer {
+
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            imageView.setClickable(false);
+        }
+
+        @Override
+        public void onFinish() {
+            imageView.setClickable(true);
+        }
+    }
 
 
 }

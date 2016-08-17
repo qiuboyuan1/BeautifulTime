@@ -6,6 +6,7 @@ import android.os.CountDownTimer;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,8 +25,8 @@ import java.util.List;
 /**
  * Created by dllo on 16/8/15.
  */
-public class BeautifulTimeShowFragment extends AbsBaseFragment {
-    private CountDownTimer countDownTimer;
+public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.OnClickListener {
+
     private ViewPager viewPager;
     private ShowViewPagerAdapter viewPagerAdapter;
     private List<ShowPictureData> pictureDatas = new ArrayList<>();
@@ -45,6 +46,7 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment {
         LlDownload = byView(R.id.LlDownload);
         LlDelete = byView(R.id.LlDelete);
         LlNew = byView(R.id.LlNew);
+        LlEdit.setOnClickListener(this);
     }
 
     @Override
@@ -61,33 +63,52 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment {
         viewPager.setAdapter(viewPagerAdapter);
         //设置切换动画
         viewPager.setPageTransformer(true, new DepthPageTransformer());
-        //设置弹出动画
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        //设置弹出编辑动画
         showAnimation = new ShowAnimation(LlEdit, LlDownload, LlDelete, LlNew);
         viewPagerAdapter.setOnImageViewClickListener(new ShowViewPagerAdapter.OnImageViewClickListener() {
 
             @Override
             public void OnImageViewListener(final ImageView imageView) {
-//                countDownTimer.start();
-                showAnimation.ShowView();
-                showAnimation.setImageView(imageView);
 
+                showAnimation.setImageView(imageView);
+                showAnimation.ShowView();
 
             }
         });
-//        countDownTimer = new CountDownTimer(2000,1000) {
-//            @Override
-//            public void onTick(long millisUntilFinished) {
-//
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//
-//            }
-//        };
+
+
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.LlEdit:
+                Toast.makeText(sContext, "编辑成功", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.LlDownload:
+                break;
+            case R.id.LlDelete:
 
-
+                break;
+            case R.id.LlNew:
+                break;
+        }
+    }
 }

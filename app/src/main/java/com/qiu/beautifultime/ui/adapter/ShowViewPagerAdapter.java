@@ -1,17 +1,11 @@
 package com.qiu.beautifultime.ui.adapter;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
+
 import android.content.Context;
-import android.os.CountDownTimer;
 import android.support.v4.view.PagerAdapter;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.qiu.beautifultime.R;
 import com.qiu.beautifultime.data.ShowPictureData;
 import com.qiu.beautifultime.tools.SensorImg;
