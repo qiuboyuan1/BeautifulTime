@@ -23,7 +23,6 @@ import com.qiu.beautifultime.R;
 public class VideoActivity extends AbsBaseActivity implements View.OnClickListener {
     private VideoView videoView;
     private ImageView ivBack, ivShare;
-    private TextView tvJump;
 
     @Override
     protected int setLayout() {
@@ -34,27 +33,16 @@ public class VideoActivity extends AbsBaseActivity implements View.OnClickListen
     protected void initView() {
         ivBack = byView(R.id.iv_video_back);
         ivShare = byView(R.id.iv_setting_share);
-        tvJump = byView(R.id.tv_jump);
     }
 
     @Override
     protected void initData() {
         ivBack.setOnClickListener(this);
-        tvJump.setOnClickListener(this);
         ivShare.setOnClickListener(this);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         videoView = (VideoView) findViewById(R.id.videoView);
         videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.guide));
         videoView.start();
-        //点击显示隐藏按钮
-        videoView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                ivBack.setVisibility(View.VISIBLE);
-                ivShare.setVisibility(View.VISIBLE);
-                return false;
-            }
-        });
         //播放完成跳转
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -71,9 +59,6 @@ public class VideoActivity extends AbsBaseActivity implements View.OnClickListen
                 finish();
                 break;
             case R.id.iv_setting_share:
-                break;
-            case R.id.tv_jump:
-                startActivity(new Intent(VideoActivity.this, SettingActivity.class));
                 break;
 
         }

@@ -13,23 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/iv_video_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_margin="10dp"
-            android:background="@drawable/setting_video_back" />
-
-        <ImageView
-            android:id="@+id/iv_setting_share"
+        <TextView
+            android:id="@+id/tv_jump"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
-            android:background="@drawable/setting_video_share" />
-
+            android:text="跳过"
+            android:textSize="20sp" />
     </RelativeLayout>
-
 
 </RelativeLayout>
