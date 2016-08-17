@@ -1,5 +1,6 @@
 package com.qiu.beautifultime.ui.fragment;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
@@ -7,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +27,7 @@ import java.util.List;
  * 进入的第一个界面
  * Created by dllo on 16/8/15.
  */
-public class BeautifulTimeNotesFragment extends AbsBaseFragment implements View.OnClickListener, TimeItemRecycleViewAdapter.ItemClickListener {
+public class BeautifulTimeNotesFragment extends AbsBaseFragment implements View.OnClickListener, TimeItemRecycleViewAdapter.ItemClickListener, TimeItemRecycleViewAdapter.ItemLongClickListener {
     private ImageView setIv;//设置按钮
     private TextView recordTv;////点击记录按钮
     private TextView notesTv;//通知标题
@@ -34,7 +36,7 @@ public class BeautifulTimeNotesFragment extends AbsBaseFragment implements View.
     private RecyclerView recordItem;//记录条目
     private TimeItemRecycleViewAdapter itemRecycleViewAdapter;
     private List<ItemTimeData> timeDatas = new ArrayList<>();
-
+    private boolean fabOpend = false;
 
     @Override
     protected int setLayout() {
@@ -64,7 +66,7 @@ public class BeautifulTimeNotesFragment extends AbsBaseFragment implements View.
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recordItem.setLayoutManager(manager);
         //添加数据
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10; i++) {
             timeDatas.add(new ItemTimeData("第" + i));
         }
         itemRecycleViewAdapter.setTimeDatas(timeDatas);
@@ -77,6 +79,7 @@ public class BeautifulTimeNotesFragment extends AbsBaseFragment implements View.
 
         //设置监听
         itemRecycleViewAdapter.setClickListener(this);
+        itemRecycleViewAdapter.setLongClickListener(this);
         //判断当前是否有记录
         isRecord();
     }
@@ -94,10 +97,32 @@ public class BeautifulTimeNotesFragment extends AbsBaseFragment implements View.
 
                 break;
             case R.id.beautiful_time_notes_float_btn:
+                if (!fabOpend) {
+                    //点击动画
+                    opendAnim();
+                } else {
+                    closeAnim();
+                }
                 //跳转
                 startActivity(new Intent(sContext, BeautifulTimeChooseActivity.class));
                 break;
         }
+    }
+
+    private void closeAnim() {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(faBtn, "rotation", 135, 0);
+        animator.setDuration(500);
+        animator.setInterpolator(new DecelerateInterpolator());
+        animator.start();
+        fabOpend = false;
+    }
+
+    private void opendAnim() {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(faBtn, "rotation", 0, 135);
+        animator.setDuration(500);
+        animator.setInterpolator(new DecelerateInterpolator());
+        animator.start();
+        fabOpend = true;
     }
 
     @Override
@@ -115,5 +140,21 @@ public class BeautifulTimeNotesFragment extends AbsBaseFragment implements View.
             notesTv.setVisibility(View.GONE);
             backIv.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //在每次将要显示此界面的时候刷新一下有没有数据更新
+        itemRecycleViewAdapter.notifyDataSetChanged();
+        int size = itemRecycleViewAdapter.getItemCount();
+        if (size == 0) {
+            faBtn.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void itemLongClick(int pos) {
+
     }
 }

@@ -1,11 +1,17 @@
 package com.qiu.beautifultime.ui.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.ClipData;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.qiu.beautifultime.R;
@@ -30,6 +36,9 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
     private ImageButton backIbtn;//返回图标
     private ImageButton okIbtn;//确定图标
     private int dataSize=0;
+    private TextView colorTv;//颜色选择按钮
+    private int color;
+    private MyBroadCast myBroadCast;
 
     @Override
     protected int setLayout() {
@@ -42,6 +51,7 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
         imageView = byView(R.id.three_iv);
         backIbtn = byView(R.id.three_back_iv_btn);
         okIbtn = byView(R.id.three_ok_iv_btn);
+        colorTv = byView(R.id.time_choose_color_tv);
     }
 
     @Override
@@ -69,6 +79,14 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
 
         backIbtn.setOnClickListener(this);
         okIbtn.setOnClickListener(this);
+        colorTv.setOnClickListener(this);
+        //默认背景色
+        colorTv.setBackgroundColor(Color.rgb(64, 180, 214));
+        //注册广播
+        myBroadCast = new MyBroadCast();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.qiu.beautifulTime.get.color");
+        registerReceiver(myBroadCast, intentFilter);
 
     }
 
@@ -88,6 +106,27 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
                 Toast.makeText(this, "aaaa", Toast.LENGTH_SHORT).show();
                 BeautifulTimeChooseActivity.this.finish();
                 break;
+            case R.id.time_choose_color_tv:
+                Intent intent = new Intent(BeautifulTimeChooseActivity.this, ColorChooseActivity.class);
+                startActivity(intent);
+                break;
         }
+    }
+    class MyBroadCast extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            color = intent.getIntExtra("color", 0x00);
+            //改变颜色
+            if (color != 0x00) {
+                colorTv.setBackgroundColor(color);
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(myBroadCast);
+        super.onDestroy();
     }
 }

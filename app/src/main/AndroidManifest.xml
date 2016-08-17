@@ -17,14 +17,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.BeautifulTimeChooseActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".ui.activity.MainActivity"/>
-        <activity android:name=".ui.activity.SettingActivity"/>
-        <activity android:name=".ui.activity.SetGestureLockActivity"/>
-        <activity android:name=".ui.activity.CheckoutGestureLockActivity"/>
-        <activity android:name=".ui.activity.VideoActivity"/>
-        <activity android:name=".ui.activity.LockActivity"/>
+        <activity
+            android:name=".ui.activity.BeautifulTimeChooseActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".ui.activity.MainActivity" />
+        <activity android:name=".ui.activity.SettingActivity" />
+        <activity android:name=".ui.activity.SetGestureLockActivity" />
+        <activity android:name=".ui.activity.CheckoutGestureLockActivity" />
+        <activity android:name=".ui.activity.VideoActivity" />
+        <activity android:name=".ui.activity.LockActivity" />
+        <activity
+            android:name=".ui.activity.ColorChooseActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/ChooseColor" />
     </application>
 
 </manifest>

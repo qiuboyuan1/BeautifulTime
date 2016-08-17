@@ -123,11 +123,9 @@
                 android:textColor="#ffffffff"
                 android:text="颜色"/>
             <TextView
+                android:id="@+id/time_choose_color_tv"
                 android:layout_width="90dp"
                 android:gravity="center"
-                android:text="颜色"
-                android:textColor="#ffffffff"
-                android:background="#27b7d7"
                 android:layout_height="45dp" />
         </LinearLayout>
         <RelativeLayout

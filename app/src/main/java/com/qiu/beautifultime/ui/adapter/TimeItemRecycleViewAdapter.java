@@ -1,11 +1,13 @@
 package com.qiu.beautifultime.ui.adapter;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -24,6 +26,11 @@ public class TimeItemRecycleViewAdapter extends RecyclerView.Adapter<TimeItemRec
     private Context context;
     public static List<ItemTimeData> timeDatas;
     private ItemClickListener clickListener;
+    private ItemLongClickListener longClickListener;
+
+    public void setLongClickListener(ItemLongClickListener longClickListener) {
+        this.longClickListener = longClickListener;
+    }
 
     public TimeItemRecycleViewAdapter(Context context) {
         this.context = context;
@@ -40,11 +47,12 @@ public class TimeItemRecycleViewAdapter extends RecyclerView.Adapter<TimeItemRec
 
     /**
      * 添加item
+     *
      * @param position
      * @param data
      */
-    public void addItem(int position,ItemTimeData data){
-        timeDatas.add(position,data);
+    public void addItem(int position, ItemTimeData data) {
+        timeDatas.add(position, data);
         notifyItemInserted(position);
     }
 
@@ -67,6 +75,21 @@ public class TimeItemRecycleViewAdapter extends RecyclerView.Adapter<TimeItemRec
                 }
             });
         }
+        if (longClickListener != null) {
+            holder.progressBar.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int pos = holder.getLayoutPosition();
+                    longClickListener.itemLongClick(pos);
+                    //长点击动画
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(holder.progressBar, "translationX", 0, -10, 10, -8, 8, -6, 6, -4, 4, -2, 2, 0);
+                    animator.setDuration(200);
+                    animator.setInterpolator(new DecelerateInterpolator());
+                    animator.start();
+                    return true;
+                }
+            });
+        }
     }
 
     @Override
@@ -86,10 +109,6 @@ public class TimeItemRecycleViewAdapter extends RecyclerView.Adapter<TimeItemRec
         }
     }
 
-    public interface ItemClickListener {
-        void itemClick(int pos);
-    }
-
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
         Collections.swap(timeDatas, fromPosition, toPosition);
@@ -100,5 +119,19 @@ public class TimeItemRecycleViewAdapter extends RecyclerView.Adapter<TimeItemRec
     public void onItemDismiss(int position) {
         timeDatas.remove(position);
         notifyDataSetChanged();
+    }
+
+    /**
+     * 点击事件
+     */
+    public interface ItemClickListener {
+        void itemClick(int pos);
+    }
+
+    /**
+     * 长点击事件
+     */
+    public interface ItemLongClickListener {
+        void itemLongClick(int pos);
     }
 }
