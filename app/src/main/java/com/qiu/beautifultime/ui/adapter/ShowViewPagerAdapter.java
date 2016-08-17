@@ -1,10 +1,16 @@
 package com.qiu.beautifultime.ui.adapter;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.support.v4.view.PagerAdapter;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.qiu.beautifultime.R;
 import com.qiu.beautifultime.data.ShowPictureData;
@@ -21,9 +27,19 @@ public class ShowViewPagerAdapter extends PagerAdapter {
     private Context context;
     private List<ShowPictureData> pictureDatas;
     private ImageView imageView;
+    private boolean asd = true;
 
-    public ShowViewPagerAdapter(Context context) {
+
+    private int width;
+    private OnImageViewClickListener onImageViewClickListener;
+
+    public void setOnImageViewClickListener(OnImageViewClickListener onImageViewClickListener) {
+        this.onImageViewClickListener = onImageViewClickListener;
+    }
+
+    public ShowViewPagerAdapter(Context context, int width) {
         this.context = context;
+        this.width = width;
     }
 
     public void setPictureDatas(List<ShowPictureData> pictureDatas) {
@@ -33,19 +49,28 @@ public class ShowViewPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return pictureDatas==null?0:pictureDatas.size();
+        return pictureDatas == null ? 0 : pictureDatas.size();
     }
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view==object;
+        return view == object;
     }
+
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View view= View.inflate(context, R.layout.show_image_item, null);
+        View view = View.inflate(context, R.layout.show_image_item, null);
         imageView = (ImageView) view.findViewById(R.id.show_image_iv);
-        SensorImg.getSensorImg(context, imageView, pictureDatas.get(position).getImgName(),920);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onImageViewClickListener.OnImageViewListener(imageView);
+
+            }
+        });
+        SensorImg.getSensorImg(context, imageView, pictureDatas.get(position).getImgName(), 920);
         container.addView(view);
         return view;
     }
@@ -53,5 +78,9 @@ public class ShowViewPagerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
+    }
+
+    public interface OnImageViewClickListener {
+        void OnImageViewListener(ImageView imageView);
     }
 }
