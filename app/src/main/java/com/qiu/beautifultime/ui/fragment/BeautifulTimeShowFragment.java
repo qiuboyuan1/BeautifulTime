@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.os.CountDownTimer;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.qiu.beautifultime.R;
 import com.qiu.beautifultime.data.ShowPictureData;
 import com.qiu.beautifultime.tools.DepthPageTransformer;
+import com.qiu.beautifultime.tools.MyViewPager;
 import com.qiu.beautifultime.tools.ShowAnimation;
 import com.qiu.beautifultime.ui.adapter.ShowViewPagerAdapter;
 
@@ -27,11 +29,10 @@ import java.util.List;
  */
 public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.OnClickListener {
 
-    private ViewPager viewPager;
+    private MyViewPager viewPager;
     private ShowViewPagerAdapter viewPagerAdapter;
     private List<ShowPictureData> pictureDatas = new ArrayList<>();
-
-    private LinearLayout LlEdit,LlDownload,LlDelete,LlNew;
+    private LinearLayout LlEdit, LlDownload, LlDelete, LlNew;
     private ShowAnimation showAnimation;
 
     @Override
@@ -71,6 +72,7 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
 
             @Override
             public void onPageSelected(int position) {
+                BeautifulTimeShowFragment.this.position = position;
 
             }
 
@@ -81,13 +83,17 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
         });
         //设置弹出编辑动画
         showAnimation = new ShowAnimation(LlEdit, LlDownload, LlDelete, LlNew);
+        showAnimation.setMyViewPager(viewPager);
         viewPagerAdapter.setOnImageViewClickListener(new ShowViewPagerAdapter.OnImageViewClickListener() {
 
             @Override
             public void OnImageViewListener(final ImageView imageView) {
+                Log.d("TAGGG", "OnImageViewListener() called with: " + "imageView = [" + imageView + "]");
+                if (imageView.getContentDescription().equals(position + "")) {
+                    showAnimation.setImageView(imageView);
 
-                showAnimation.setImageView(imageView);
-                showAnimation.ShowView();
+                    showAnimation.ShowView();
+                }
 
             }
         });
@@ -95,10 +101,11 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
 
     }
 
+    private int position;
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.LlEdit:
                 Toast.makeText(sContext, "编辑成功", Toast.LENGTH_SHORT).show();
                 break;

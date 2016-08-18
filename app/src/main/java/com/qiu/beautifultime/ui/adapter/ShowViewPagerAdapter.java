@@ -20,7 +20,6 @@ import java.util.List;
 public class ShowViewPagerAdapter extends PagerAdapter {
     private Context context;
     private List<ShowPictureData> pictureDatas;
-    private ImageView imageView;
     private boolean asd = true;
 
 
@@ -55,7 +54,8 @@ public class ShowViewPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View view = View.inflate(context, R.layout.show_image_item, null);
-        imageView = (ImageView) view.findViewById(R.id.show_image_iv);
+        final ImageView imageView = (ImageView) view.findViewById(R.id.show_image_iv);
+        imageView.setContentDescription(position + "");
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +74,7 @@ public class ShowViewPagerAdapter extends PagerAdapter {
         container.removeView((View) object);
     }
 
+    //内部接口
     public interface OnImageViewClickListener {
         void OnImageViewListener(ImageView imageView);
     }
