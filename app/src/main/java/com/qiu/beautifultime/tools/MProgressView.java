@@ -35,7 +35,7 @@ public class MProgressView extends View {
     private void init() {
         //背景
         mBackPaint = new Paint();
-        mBackPaint.setColor(Color.WHITE);
+        mBackPaint.setColor(0x00ffffff);
         mBackPaint.setAntiAlias(true);//抗锯齿
         mBackPaint.setStyle(Paint.Style.FILL);
         //初始化
