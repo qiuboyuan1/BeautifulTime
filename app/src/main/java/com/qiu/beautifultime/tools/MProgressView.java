@@ -17,11 +17,11 @@ public class MProgressView extends View {
 
     private Paint mBackPaint;//背景画笔
     private Paint mFrontPaint;//进度画笔
-    private int frontColor=16756993;//进度颜色
+    private int frontColor = 16756993;//进度颜色默认
     private RectF mRect;//矩形对象
     private int mWidth;//view的宽
     private int mHeight;//view的高
-    private int progress;//进度
+    private int progress = 100;//进度默认
 
 
     public MProgressView(Context context, AttributeSet attrs) {
@@ -38,6 +38,8 @@ public class MProgressView extends View {
         mBackPaint.setColor(Color.WHITE);
         mBackPaint.setAntiAlias(true);//抗锯齿
         mBackPaint.setStyle(Paint.Style.FILL);
+        //初始化
+        mFrontPaint = new Paint();
     }
 
 
@@ -50,13 +52,13 @@ public class MProgressView extends View {
 
     /**
      * 设置进度颜色
+     *
      * @param color
      */
     public void setProgressColor(int color) {
-        if (color!=0){
-            this.frontColor=color;
+        if (color != 0) {
+            this.frontColor = color;
             //进度条
-            mFrontPaint = new Paint();
             mFrontPaint.setColor(frontColor);
             mFrontPaint.setAntiAlias(true);
             //设置画笔类型

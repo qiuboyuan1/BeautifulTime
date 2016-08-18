@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.qiu.beautifultime.R;
 import com.qiu.beautifultime.data.ItemTimeData;
 import com.qiu.beautifultime.item.TimeItemTouchHelperCallback;
+import com.qiu.beautifultime.tools.MProgressView;
+import com.qiu.beautifultime.ui.fragment.BeautifulTimeNotesFragment;
 
 import java.util.Collections;
 import java.util.List;
@@ -66,6 +68,8 @@ public class TimeItemRecycleViewAdapter extends RecyclerView.Adapter<TimeItemRec
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         holder.textView.setText(timeDatas.get(position).getDays());
+        holder.progressBar.setProgress(200);
+        holder.progressBar.setProgressColor(timeDatas.get(position).getColor());
         if (clickListener != null) {
             holder.progressBar.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -100,12 +104,12 @@ public class TimeItemRecycleViewAdapter extends RecyclerView.Adapter<TimeItemRec
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView textView;
-        private ProgressBar progressBar;
+        private MProgressView progressBar;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.home_time_item_tv);
-            progressBar = (ProgressBar) itemView.findViewById(R.id.home_time_item_progress_bar);
+            progressBar = (MProgressView) itemView.findViewById(R.id.home_time_item_progress_bar);
         }
     }
 
