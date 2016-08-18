@@ -24,7 +24,7 @@ public class WelcomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences sp = getSharedPreferences("guide", MODE_PRIVATE);
+        final SharedPreferences sp = getSharedPreferences("guide", MODE_PRIVATE);
         if (sp.getBoolean("isFirst", true)) {
             Intent intent = new Intent(this, GuideActivity.class);
             startActivity(intent);
@@ -59,6 +59,7 @@ public class WelcomeActivity extends Activity {
                     startActivity(new Intent(WelcomeActivity.this, CheckoutGestureLockActivity.class));
                 } else {
                     startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+                finish();
                 }
             }
         }.start();

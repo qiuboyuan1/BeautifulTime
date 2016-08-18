@@ -1,6 +1,7 @@
 package com.qiu.beautifultime.ui.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Switch;
@@ -15,6 +16,8 @@ import com.qiu.beautifultime.R;
 public class LockActivity extends AbsBaseActivity implements View.OnClickListener {
     private ImageView ivBack;
     private Switch aSwitch;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected int setLayout() {
@@ -32,6 +35,8 @@ public class LockActivity extends AbsBaseActivity implements View.OnClickListene
         ivBack.setOnClickListener(this);
         aSwitch.setOnClickListener(this);
         aSwitch.setChecked(false);
+        sp = getSharedPreferences("guide", MODE_PRIVATE);
+        editor = sp.edit();
     }
 
     @Override

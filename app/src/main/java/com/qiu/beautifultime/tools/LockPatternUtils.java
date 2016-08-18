@@ -61,5 +61,4 @@ public class LockPatternUtils {
     public static boolean isLogin() {
         return sp.getBoolean("login_key", false);
     }
-
 }
