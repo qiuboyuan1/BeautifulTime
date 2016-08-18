@@ -15,8 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.qiu.beautifultime.R;
+import com.qiu.beautifultime.data.AllData;
 import com.qiu.beautifultime.data.ItemTimeData;
 import com.qiu.beautifultime.data.SetPictureData;
+import com.qiu.beautifultime.db.OrmInstence;
 import com.qiu.beautifultime.tools.SensorImg;
 import com.qiu.beautifultime.ui.adapter.OneRecyclerViewAdapter;
 import com.qiu.beautifultime.ui.adapter.TimeItemRecycleViewAdapter;
@@ -35,7 +37,7 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
     private ImageView imageView;
     private ImageButton backIbtn;//返回图标
     private ImageButton okIbtn;//确定图标
-    private int dataSize=0;
+    private int dataSize = 0;
     private TextView colorTv;//颜色选择按钮
     private int color;
     private MyBroadCast myBroadCast;
@@ -97,12 +99,22 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
                 BeautifulTimeChooseActivity.this.finish();
                 break;
             case R.id.three_ok_iv_btn:
-                TimeItemRecycleViewAdapter adapter=new TimeItemRecycleViewAdapter(this);
-                ItemTimeData timeData=new ItemTimeData();
-                dataSize=TimeItemRecycleViewAdapter.timeDatas.size();
+                TimeItemRecycleViewAdapter adapter = new TimeItemRecycleViewAdapter(this);
+                ItemTimeData timeData = new ItemTimeData();
+                dataSize = TimeItemRecycleViewAdapter.timeDatas.size();
                 dataSize++;
                 timeData.setDays("sss");
-                adapter.addItem(0,timeData);
+                timeData.setColor(color);
+                adapter.addItem(0, timeData);
+                //存储数据
+                OrmInstence.getOrmInstence().addOneData(new AllData("asdasd", System.currentTimeMillis(), color, "asdasdccc"));
+
+                //发送到notesfragment
+                Intent intents = new Intent("aa");
+                intents.putExtra("color", color);
+                sendBroadcast(intents);
+
+
                 Toast.makeText(this, "aaaa", Toast.LENGTH_SHORT).show();
                 BeautifulTimeChooseActivity.this.finish();
                 break;
@@ -112,6 +124,7 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
                 break;
         }
     }
+
     class MyBroadCast extends BroadcastReceiver {
 
         @Override

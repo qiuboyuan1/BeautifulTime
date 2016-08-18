@@ -1,7 +1,10 @@
 package com.qiu.beautifultime.ui.fragment;
 
 import android.animation.ObjectAnimator;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.qiu.beautifultime.R;
+import com.qiu.beautifultime.data.AllData;
 import com.qiu.beautifultime.data.ItemTimeData;
+import com.qiu.beautifultime.db.OrmInstence;
 import com.qiu.beautifultime.item.TimeItemTouchHelperCallback;
 import com.qiu.beautifultime.ui.activity.BeautifulTimeChooseActivity;
 import com.qiu.beautifultime.ui.activity.SettingActivity;
@@ -37,6 +42,7 @@ public class BeautifulTimeNotesFragment extends AbsBaseFragment implements View.
     private TimeItemRecycleViewAdapter itemRecycleViewAdapter;
     private List<ItemTimeData> timeDatas = new ArrayList<>();
     private boolean fabOpend = false;
+    private MyBroadCast myBroadCast;
 
     @Override
     protected int setLayout() {
@@ -61,13 +67,21 @@ public class BeautifulTimeNotesFragment extends AbsBaseFragment implements View.
         faBtn.setBackgroundColor(Color.rgb(39, 183, 215));
         faBtn.setOnClickListener(this);
 
+
+        myBroadCast = new MyBroadCast();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("aa");
+        sContext.registerReceiver(myBroadCast, filter);
+
+
         itemRecycleViewAdapter = new TimeItemRecycleViewAdapter(sContext);
         LinearLayoutManager manager = new LinearLayoutManager(sContext);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recordItem.setLayoutManager(manager);
         //添加数据
-        for (int i = 0; i < 10; i++) {
-            timeDatas.add(new ItemTimeData("第" + i));
+        List<AllData> allDatas = OrmInstence.getOrmInstence().serchAllData(AllData.class);
+        for (int i = 0; i < allDatas.size(); i++) {
+            timeDatas.add(new ItemTimeData(allDatas.get(allDatas.size() - 1 - i).getPictureName(), allDatas.get(allDatas.size() - 1 - i).getColor()));
         }
         itemRecycleViewAdapter.setTimeDatas(timeDatas);
         recordItem.setAdapter(itemRecycleViewAdapter);
@@ -147,14 +161,24 @@ public class BeautifulTimeNotesFragment extends AbsBaseFragment implements View.
         super.onResume();
         //在每次将要显示此界面的时候刷新一下有没有数据更新
         itemRecycleViewAdapter.notifyDataSetChanged();
-        int size = itemRecycleViewAdapter.getItemCount();
-        if (size == 0) {
-            faBtn.setVisibility(View.GONE);
-        }
     }
 
     @Override
     public void itemLongClick(int pos) {
 
+    }
+    public class MyBroadCast extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //接受chooseactivity发送的广播
+            itemRecycleViewAdapter.setTimeDatas(timeDatas);
+            isRecord();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        sContext.unregisterReceiver(myBroadCast);
+        super.onDestroy();
     }
 }
