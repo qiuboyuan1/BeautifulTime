@@ -5,7 +5,9 @@ import android.animation.ObjectAnimator;
 import android.os.CountDownTimer;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import com.qiu.beautifultime.R;
 import com.qiu.beautifultime.data.ShowPictureData;
 import com.qiu.beautifultime.tools.DepthPageTransformer;
+import com.qiu.beautifultime.tools.MyViewPager;
 import com.qiu.beautifultime.tools.ShowAnimation;
 import com.qiu.beautifultime.ui.adapter.ShowViewPagerAdapter;
 
@@ -24,13 +27,12 @@ import java.util.List;
 /**
  * Created by dllo on 16/8/15.
  */
-public class BeautifulTimeShowFragment extends AbsBaseFragment {
-    private CountDownTimer countDownTimer;
-    private ViewPager viewPager;
+public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.OnClickListener {
+
+    private MyViewPager viewPager;
     private ShowViewPagerAdapter viewPagerAdapter;
     private List<ShowPictureData> pictureDatas = new ArrayList<>();
-
-    private LinearLayout LlEdit,LlDownload,LlDelete,LlNew;
+    private LinearLayout LlEdit, LlDownload, LlDelete, LlNew;
     private ShowAnimation showAnimation;
 
     @Override
@@ -45,6 +47,7 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment {
         LlDownload = byView(R.id.LlDownload);
         LlDelete = byView(R.id.LlDelete);
         LlNew = byView(R.id.LlNew);
+        LlEdit.setOnClickListener(this);
     }
 
     @Override
@@ -61,33 +64,58 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment {
         viewPager.setAdapter(viewPagerAdapter);
         //设置切换动画
         viewPager.setPageTransformer(true, new DepthPageTransformer());
-        //设置弹出动画
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                BeautifulTimeShowFragment.this.position = position;
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        //设置弹出编辑动画
         showAnimation = new ShowAnimation(LlEdit, LlDownload, LlDelete, LlNew);
+        showAnimation.setMyViewPager(viewPager);
         viewPagerAdapter.setOnImageViewClickListener(new ShowViewPagerAdapter.OnImageViewClickListener() {
 
             @Override
             public void OnImageViewListener(final ImageView imageView) {
-//                countDownTimer.start();
-                showAnimation.ShowView();
-                showAnimation.setImageView(imageView);
+                Log.d("TAGGG", "OnImageViewListener() called with: " + "imageView = [" + imageView + "]");
+                if (imageView.getContentDescription().equals(position + "")) {
+                    showAnimation.setImageView(imageView);
 
+                    showAnimation.ShowView();
+                }
 
             }
         });
-//        countDownTimer = new CountDownTimer(2000,1000) {
-//            @Override
-//            public void onTick(long millisUntilFinished) {
-//
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//
-//            }
-//        };
+
+
     }
 
+    private int position;
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.LlEdit:
+                Toast.makeText(sContext, "编辑成功", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.LlDownload:
+                break;
+            case R.id.LlDelete:
 
-
+                break;
+            case R.id.LlNew:
+                break;
+        }
+    }
 }

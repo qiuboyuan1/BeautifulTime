@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v4.view.ViewPager
+    <com.qiu.beautifultime.tools.MyViewPager
         android:id="@+id/beautiful_time_show_vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -18,9 +18,10 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="40dp"
+            android:layout_width="50dp"
             android:layout_height="40dp"
             android:background="@android:color/background_dark"
+            android:scaleType="center"
             android:src="@mipmap/icon_edit_normal" />
 
         <TextView
@@ -45,9 +46,10 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="40dp"
+            android:layout_width="50dp"
             android:layout_height="40dp"
             android:background="@android:color/background_dark"
+            android:scaleType="center"
             android:src="@mipmap/icon_download_normal" />
 
         <TextView
@@ -71,9 +73,10 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="40dp"
+            android:layout_width="50dp"
             android:layout_height="40dp"
             android:background="@android:color/background_dark"
+            android:scaleType="center"
             android:src="@mipmap/icon_delete_normal" />
 
         <TextView
@@ -97,9 +100,10 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="40dp"
+            android:layout_width="50dp"
             android:layout_height="40dp"
             android:background="@android:color/background_dark"
+            android:scaleType="center"
             android:src="@mipmap/list_icon_plus" />
 
         <TextView
