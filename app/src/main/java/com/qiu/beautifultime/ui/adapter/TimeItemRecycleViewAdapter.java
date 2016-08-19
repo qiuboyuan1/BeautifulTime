@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.qiu.beautifultime.R;
 import com.qiu.beautifultime.data.ItemTimeData;
+import com.qiu.beautifultime.db.OrmInstence;
 import com.qiu.beautifultime.item.TimeItemTouchHelperCallback;
 import com.qiu.beautifultime.tools.MProgressView;
 import com.qiu.beautifultime.ui.fragment.BeautifulTimeNotesFragment;
@@ -125,6 +126,7 @@ public class TimeItemRecycleViewAdapter extends RecyclerView.Adapter<TimeItemRec
 
     @Override
     public void onItemDismiss(int position) {
+        OrmInstence.getOrmInstence().delValueData(ItemTimeData.class, "date", String.valueOf(timeDatas.get(position).getDate()));
         timeDatas.remove(position);
         notifyDataSetChanged();
     }

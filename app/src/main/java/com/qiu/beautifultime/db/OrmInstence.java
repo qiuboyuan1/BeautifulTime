@@ -2,6 +2,7 @@ package com.qiu.beautifultime.db;
 
 import com.litesuits.orm.LiteOrm;
 import com.litesuits.orm.db.DataBaseConfig;
+import com.litesuits.orm.db.assit.WhereBuilder;
 import com.litesuits.orm.db.model.ConflictAlgorithm;
 import com.qiu.beautifultime.BuildConfig;
 import com.qiu.beautifultime.app.App;
@@ -93,16 +94,14 @@ public class OrmInstence {
     }
 
     /**
-     * 按条件删除
-     *
-     * @param tClass
-     * @param start
-     * @param end
-     * @param s
+     * 按日期条件删除
+     * @param tClass 表名
+     * @param filed 列名
+     * @param value 删除对象
      * @param <T>
      */
-    public <T> void delValueData(Class<T> tClass, long start, long end, String s) {
-        liteOrm.delete(tClass, start, end, s);
+    public <T> void delValueData(Class<T> tClass, String filed, String value) {
+        liteOrm.delete(WhereBuilder.create(tClass).where(filed + "=?", new Object[]{value}));
     }
 
 
