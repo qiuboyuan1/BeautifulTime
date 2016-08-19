@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.qiu.beautifultime.R;
-import com.qiu.beautifultime.data.AllData;
 import com.qiu.beautifultime.data.ItemTimeData;
 import com.qiu.beautifultime.db.OrmInstence;
 import com.qiu.beautifultime.item.TimeItemTouchHelperCallback;
@@ -79,9 +78,10 @@ public class BeautifulTimeNotesFragment extends AbsBaseFragment implements View.
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recordItem.setLayoutManager(manager);
         //添加数据
-        List<AllData> allDatas = OrmInstence.getOrmInstence().serchAllData(AllData.class);
+        List<ItemTimeData> allDatas = OrmInstence.getOrmInstence().serchAllData(ItemTimeData.class);
         for (int i = 0; i < allDatas.size(); i++) {
-            timeDatas.add(new ItemTimeData(allDatas.get(allDatas.size() - 1 - i).getPictureName(), allDatas.get(allDatas.size() - 1 - i).getColor()));
+            int pos=allDatas.size() - 1 - i;
+            timeDatas.add(new ItemTimeData(allDatas.get(pos).getTitle(), allDatas.get(pos).getDate(),allDatas.get(pos).getColor(),allDatas.get(pos).getPictureName()));
         }
         itemRecycleViewAdapter.setTimeDatas(timeDatas);
         recordItem.setAdapter(itemRecycleViewAdapter);

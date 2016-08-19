@@ -1,7 +1,6 @@
 package com.qiu.beautifultime.ui.activity;
 
 import android.content.BroadcastReceiver;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -9,21 +8,27 @@ import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.qiu.beautifultime.R;
-import com.qiu.beautifultime.data.AllData;
 import com.qiu.beautifultime.data.ItemTimeData;
 import com.qiu.beautifultime.data.SetPictureData;
+import com.qiu.beautifultime.data.ShowPictureData;
 import com.qiu.beautifultime.db.OrmInstence;
+import com.qiu.beautifultime.tools.DateCount;
 import com.qiu.beautifultime.tools.SensorImg;
 import com.qiu.beautifultime.ui.adapter.OneRecyclerViewAdapter;
 import com.qiu.beautifultime.ui.adapter.TimeItemRecycleViewAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,6 +37,7 @@ import java.util.List;
  */
 public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View.OnClickListener {
     private List<SetPictureData> smailDatas = new ArrayList<>();
+    private List<ShowPictureData> showPictureDatas = new ArrayList<>();
     private RecyclerView recyclerView;
     private OneRecyclerViewAdapter adapter;
     private ImageView imageView;
@@ -41,6 +47,17 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
     private TextView colorTv;//颜色选择按钮
     private int color;
     private MyBroadCast myBroadCast;
+    private DatePicker datePicker;//日期选择器
+    private LinearLayout titleLl;//标题
+    private LinearLayout dateLl;//日期
+    private LinearLayout repictLl;//
+    private LinearLayout colorLl;//颜色
+    private boolean isvisibility = true;//
+    private String chooseDate="0";//选择的日期,用于显示在item上,默认为0
+    private TextView dateTv;//显示日期
+    private String dates;//用于显示在当前的日期按钮上
+    private ItemTimeData itemTimeData;
+
 
     @Override
     protected int setLayout() {
@@ -54,10 +71,23 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
         backIbtn = byView(R.id.three_back_iv_btn);
         okIbtn = byView(R.id.three_ok_iv_btn);
         colorTv = byView(R.id.time_choose_color_tv);
+        dateLl = byView(R.id.time_choose_date_ll);
+        titleLl = byView(R.id.time_choose_title_ll);
+        repictLl = byView(R.id.time_choose_repit_ll);
+        colorLl = byView(R.id.time_choose_color_ll);
+        datePicker = byView(R.id.time_choose_date_pick);
+        dateTv = byView(R.id.three_choese_date);
     }
 
     @Override
     protected void initData() {
+        //设置当前系统时间,如果dates为空则返回当前系统是时间
+        Long time = System.currentTimeMillis();
+        SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
+        dates = format.format(new Date(Long.valueOf(time)));
+
+
+
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(manager);
@@ -68,6 +98,11 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
         smailDatas.add(new SetPictureData(R.mipmap.sport_thumb));
         smailDatas.add(new SetPictureData(R.mipmap.love_thumb));
         smailDatas.add(new SetPictureData(R.mipmap.school_thumb));
+        showPictureDatas.add(new ShowPictureData("bady.jpg"));
+        showPictureDatas.add(new ShowPictureData("birthday.jpg"));
+        showPictureDatas.add(new ShowPictureData("sport.jpg"));
+        showPictureDatas.add(new ShowPictureData("love.jpg"));
+        showPictureDatas.add(new ShowPictureData("school.jpg"));
 
         adapter = new OneRecyclerViewAdapter(this, smailDatas);
         recyclerView.setAdapter(adapter);
@@ -75,13 +110,15 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
         adapter.setListener(new OneRecyclerViewAdapter.MyOnClickListener() {
             @Override
             public void MyOnClick(int pos) {
-                imageView.setImageResource(smailDatas.get(pos).getId());
+                SensorImg.getSensorImg(BeautifulTimeChooseActivity.this, imageView, showPictureDatas.get(pos).getImgName(), 920);
             }
         });
 
         backIbtn.setOnClickListener(this);
         okIbtn.setOnClickListener(this);
         colorTv.setOnClickListener(this);
+        dateLl.setOnClickListener(this);
+        titleLl.setOnClickListener(this);
         //默认背景色
         colorTv.setBackgroundColor(Color.rgb(64, 180, 214));
         //注册广播
@@ -100,14 +137,14 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
                 break;
             case R.id.three_ok_iv_btn:
                 TimeItemRecycleViewAdapter adapter = new TimeItemRecycleViewAdapter(this);
-                ItemTimeData timeData = new ItemTimeData();
+                itemTimeData = new ItemTimeData();
                 dataSize = TimeItemRecycleViewAdapter.timeDatas.size();
                 dataSize++;
-                timeData.setDays("sss");
-                timeData.setColor(color);
-                adapter.addItem(0, timeData);
+                itemTimeData.setDate(chooseDate);
+                itemTimeData.setColor(color);
+                adapter.addItem(0, itemTimeData);
                 //存储数据
-                OrmInstence.getOrmInstence().addOneData(new AllData("asdasd", System.currentTimeMillis(), color, "asdasdccc"));
+                OrmInstence.getOrmInstence().addOneData(new ItemTimeData("asd", chooseDate, color, "xxx"));
 
                 //发送到notesfragment
                 Intent intents = new Intent("aa");
@@ -122,7 +159,59 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
                 Intent intent = new Intent(BeautifulTimeChooseActivity.this, ColorChooseActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.time_choose_date_ll:
+                isVisibilty();
+
+                break;
+            case R.id.time_choose_title_ll:
+
+
+                break;
         }
+    }
+    /**
+     * 判断项的显示和影藏
+     */
+    private void isVisibilty() {
+        if (isvisibility) {
+
+            datePicker.setVisibility(View.VISIBLE);
+            repictLl.setVisibility(View.GONE);
+            colorLl.setVisibility(View.GONE);
+            isvisibility = false;
+
+            //获取选择的时间
+            getChooseDate();
+
+        } else {
+            datePicker.setVisibility(View.GONE);
+            repictLl.setVisibility(View.VISIBLE);
+            colorLl.setVisibility(View.VISIBLE);
+            isvisibility = true;
+            if (dates.length() > 0) {
+                dateTv.setText(dates);
+            } else {
+
+//                dateTv.setText(format.format(new Date(Long.valueOf(time))));
+            }
+        }
+    }
+    private void getChooseDate() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int monthOfYear = calendar.get(Calendar.MONTH);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        datePicker.init(year, monthOfYear, dayOfMonth, new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                int y = Math.abs(year - DateCount.getYear());
+                int m = Math.abs((monthOfYear + 1) - DateCount.getMonth());
+                int d = Math.abs(dayOfMonth - DateCount.getDay());
+                dates = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                chooseDate = y * 365 + m * 30 + d + "";
+
+            }
+        });
     }
 
     class MyBroadCast extends BroadcastReceiver {

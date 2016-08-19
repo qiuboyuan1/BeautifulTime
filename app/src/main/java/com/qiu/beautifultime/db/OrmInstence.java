@@ -5,7 +5,7 @@ import com.litesuits.orm.db.DataBaseConfig;
 import com.litesuits.orm.db.model.ConflictAlgorithm;
 import com.qiu.beautifultime.BuildConfig;
 import com.qiu.beautifultime.app.App;
-import com.qiu.beautifultime.data.AllData;
+import com.qiu.beautifultime.data.ItemTimeData;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ public class OrmInstence {
      *
      * @param allData
      */
-    public void addOneData(AllData allData) {
+    public void addOneData(ItemTimeData allData) {
         liteOrm.save(allData);
     }
 
@@ -51,7 +51,7 @@ public class OrmInstence {
      *
      * @param allDatas
      */
-    public void addListData(List<AllData> allDatas) {
+    public void addListData(List<ItemTimeData> allDatas) {
         liteOrm.save(allDatas);
     }
 
@@ -61,7 +61,7 @@ public class OrmInstence {
      * @param t
      * @return
      */
-    public List<AllData> serchAllData(Class<AllData> t) {
+    public List<ItemTimeData> serchAllData(Class<ItemTimeData> t) {
         return liteOrm.query(t);
     }
 
@@ -72,15 +72,15 @@ public class OrmInstence {
      * @param t
      * @return
      */
-    public AllData serchIDData(long num, Class<AllData> t) {
+    public ItemTimeData serchIDData(long num, Class<ItemTimeData> t) {
         return liteOrm.queryById(num, t);
     }
 
     /**
      * 按条件查询
      */
-    public AllData serchOneData(String value) {
-        return liteOrm.queryById(value, AllData.class);
+    public ItemTimeData serchOneData(String value) {
+        return liteOrm.queryById(value, ItemTimeData.class);
     }
 
     /**
@@ -88,7 +88,7 @@ public class OrmInstence {
      *
      * @param allDataClass
      */
-    public void delAllData(Class<AllData> allDataClass) {
+    public void delAllData(Class<ItemTimeData> allDataClass) {
         liteOrm.delete(allDataClass);
     }
 
@@ -112,7 +112,7 @@ public class OrmInstence {
      * @param allData
      * @return
      */
-    public boolean upData(AllData allData) {
+    public boolean upData(ItemTimeData allData) {
         liteOrm.update(allData, ConflictAlgorithm.Replace);
         return false;
     }
