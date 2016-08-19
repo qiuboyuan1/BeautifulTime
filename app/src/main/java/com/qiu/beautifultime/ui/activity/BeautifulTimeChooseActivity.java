@@ -53,7 +53,7 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
     private LinearLayout repictLl;//
     private LinearLayout colorLl;//颜色
     private boolean isvisibility = true;//
-    private String chooseDate="0";//选择的日期,用于显示在item上,默认为0
+    private int chooseDate=0;//选择的日期,用于显示在item上,默认为0
     private TextView dateTv;//显示日期
     private String dates;//用于显示在当前的日期按钮上
     private ItemTimeData itemTimeData;
@@ -208,7 +208,7 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
                 int m = Math.abs((monthOfYear + 1) - DateCount.getMonth());
                 int d = Math.abs(dayOfMonth - DateCount.getDay());
                 dates = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-                chooseDate = y * 365 + m * 30 + d + "";
+                chooseDate = y * 365 + m * 30 + d;
 
             }
         });

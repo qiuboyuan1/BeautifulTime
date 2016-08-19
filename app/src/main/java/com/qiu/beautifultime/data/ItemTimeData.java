@@ -12,21 +12,21 @@ public class ItemTimeData {
     private int id;
 
     private String title;
-    private String date;
+    private int date;
     private int color;
     private String pictureName;
 
     public ItemTimeData() {
     }
 
-    public ItemTimeData(String title, String date, int color, String pictureName) {
+    public ItemTimeData(String title, int date, int color, String pictureName) {
         this.title = title;
         this.date = date;
         this.color = color;
         this.pictureName = pictureName;
     }
 
-    public ItemTimeData(int id, String title, String date, int color, String pictureName) {
+    public ItemTimeData(int id, String title, int date, int color, String pictureName) {
         id = id;
         this.title = title;
         this.date = date;
@@ -50,11 +50,11 @@ public class ItemTimeData {
         this.title = title;
     }
 
-    public String getDate() {
+    public int getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(int date) {
         this.date = date;
     }
 

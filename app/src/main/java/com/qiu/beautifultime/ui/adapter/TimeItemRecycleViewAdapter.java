@@ -67,8 +67,12 @@ public class TimeItemRecycleViewAdapter extends RecyclerView.Adapter<TimeItemRec
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        holder.textView.setText(timeDatas.get(position).getDate());
-        holder.progressBar.setProgress(200);
+        holder.textView.setText(String.valueOf(timeDatas.get(position).getDate()));
+        if (timeDatas.get(position).getDate() > 100) {
+            holder.progressBar.setProgress(timeDatas.get(position).getDate());
+        } else {
+            holder.progressBar.setProgress(100);
+        }
         holder.progressBar.setProgressColor(timeDatas.get(position).getColor());
         if (clickListener != null) {
             holder.progressBar.setOnClickListener(new View.OnClickListener() {
