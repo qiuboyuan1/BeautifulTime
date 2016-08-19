@@ -8,6 +8,6 @@
         android:id="@+id/show_image_iv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY" />
+        android:scaleType="matrix" />
 
 </RelativeLayout>
