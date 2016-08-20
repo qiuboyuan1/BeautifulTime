@@ -71,6 +71,7 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
 
         viewPagerAdapter = new ShowViewPagerAdapter(sContext, width);
         viewPager.setAdapter(viewPagerAdapter);
+        viewPager.setOffscreenPageLimit(2);
         //设置切换动画
         viewPager.setPageTransformer(true, new DepthPageTransformer());
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -138,6 +139,12 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
     public void onPause() {
         super.onPause();
         pictureDatas.clear();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        sContext.unregisterReceiver(myBroadCost);
     }
 
     public class MyBroadCost extends BroadcastReceiver {
