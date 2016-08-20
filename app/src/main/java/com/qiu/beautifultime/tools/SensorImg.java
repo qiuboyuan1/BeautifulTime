@@ -88,7 +88,7 @@ public class SensorImg implements SensorEventListener {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 
             //获取X坐标
-            int x = (int) event.values[SensorManager.DATA_X];
+            int x = (int) event.values[0];
 
             if (x == 0) orientation = RIGHT_1;//默认向左移动
 

@@ -2,6 +2,7 @@ package com.qiu.beautifultime.ui.adapter;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
@@ -127,6 +128,10 @@ public class TimeItemRecycleViewAdapter extends RecyclerView.Adapter<TimeItemRec
     @Override
     public void onItemDismiss(int position) {
         OrmInstence.getOrmInstence().delValueData(ItemTimeData.class, "date", String.valueOf(timeDatas.get(position).getDate()));
+        //通知show界面数据变化
+        Intent intent=new Intent("xxx");
+        context.sendBroadcast(intent);
+
         timeDatas.remove(position);
         notifyDataSetChanged();
     }

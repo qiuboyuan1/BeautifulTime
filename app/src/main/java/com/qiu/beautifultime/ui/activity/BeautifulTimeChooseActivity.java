@@ -37,7 +37,6 @@ import java.util.List;
  */
 public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View.OnClickListener {
     private List<SetPictureData> smailDatas = new ArrayList<>();
-    private List<ShowPictureData> showPictureDatas = new ArrayList<>();
     private RecyclerView recyclerView;
     private OneRecyclerViewAdapter adapter;
     private ImageView imageView;
@@ -53,10 +52,12 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
     private LinearLayout repictLl;//
     private LinearLayout colorLl;//颜色
     private boolean isvisibility = true;//
-    private int chooseDate=0;//选择的日期,用于显示在item上,默认为0
+    private int chooseDate = 0;//选择的日期,用于显示在item上,默认为0
     private TextView dateTv;//显示日期
     private String dates;//用于显示在当前的日期按钮上
     private ItemTimeData itemTimeData;
+    private String[] picture = new String[]{"bady.jpg", "birthday.jpg", "sport.jpg", "love.jpg", "school.jpg"};
+    private int position;
 
 
     @Override
@@ -87,7 +88,6 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
         dates = format.format(new Date(Long.valueOf(time)));
 
 
-
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(manager);
@@ -98,11 +98,6 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
         smailDatas.add(new SetPictureData(R.mipmap.sport_thumb));
         smailDatas.add(new SetPictureData(R.mipmap.love_thumb));
         smailDatas.add(new SetPictureData(R.mipmap.school_thumb));
-        showPictureDatas.add(new ShowPictureData("bady.jpg"));
-        showPictureDatas.add(new ShowPictureData("birthday.jpg"));
-        showPictureDatas.add(new ShowPictureData("sport.jpg"));
-        showPictureDatas.add(new ShowPictureData("love.jpg"));
-        showPictureDatas.add(new ShowPictureData("school.jpg"));
 
         adapter = new OneRecyclerViewAdapter(this, smailDatas);
         recyclerView.setAdapter(adapter);
@@ -110,7 +105,8 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
         adapter.setListener(new OneRecyclerViewAdapter.MyOnClickListener() {
             @Override
             public void MyOnClick(int pos) {
-                SensorImg.getSensorImg(BeautifulTimeChooseActivity.this, imageView, showPictureDatas.get(pos).getImgName(), 920);
+                position = pos;
+                SensorImg.getSensorImg(BeautifulTimeChooseActivity.this, imageView, picture[pos], 920);
             }
         });
 
@@ -136,15 +132,20 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
                 BeautifulTimeChooseActivity.this.finish();
                 break;
             case R.id.three_ok_iv_btn:
+                if (color == 0) {
+                    color = 0;
+                }
+
                 TimeItemRecycleViewAdapter adapter = new TimeItemRecycleViewAdapter(this);
                 itemTimeData = new ItemTimeData();
                 dataSize = TimeItemRecycleViewAdapter.timeDatas.size();
                 dataSize++;
                 itemTimeData.setDate(chooseDate);
                 itemTimeData.setColor(color);
+                itemTimeData.setPictureName(picture[position]);
                 adapter.addItem(0, itemTimeData);
                 //存储数据
-                OrmInstence.getOrmInstence().addOneData(new ItemTimeData("asd", chooseDate, color, "xxx"));
+                OrmInstence.getOrmInstence().addOneData(new ItemTimeData("asd", chooseDate, color, picture[position]));
 
                 //发送到notesfragment
                 Intent intents = new Intent("aa");
@@ -169,6 +170,7 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
                 break;
         }
     }
+
     /**
      * 判断项的显示和影藏
      */
@@ -196,6 +198,7 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
             }
         }
     }
+
     private void getChooseDate() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);

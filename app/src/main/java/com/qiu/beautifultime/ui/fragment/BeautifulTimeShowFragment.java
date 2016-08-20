@@ -2,6 +2,10 @@ package com.qiu.beautifultime.ui.fragment;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.CountDownTimer;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
@@ -14,7 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.qiu.beautifultime.R;
+import com.qiu.beautifultime.data.ItemTimeData;
 import com.qiu.beautifultime.data.ShowPictureData;
+import com.qiu.beautifultime.db.OrmInstence;
 import com.qiu.beautifultime.tools.DepthPageTransformer;
 import com.qiu.beautifultime.tools.MyViewPager;
 import com.qiu.beautifultime.tools.ShowAnimation;
@@ -34,6 +40,7 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
     private List<ShowPictureData> pictureDatas = new ArrayList<>();
     private LinearLayout LlEdit, LlDownload, LlDelete, LlNew;
     private ShowAnimation showAnimation;
+    private MyBroadCost myBroadCost;
 
     @Override
     protected int setLayout() {
@@ -52,15 +59,17 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
 
     @Override
     protected void initData() {
+        myBroadCost = new MyBroadCost();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("xxx");
+        sContext.registerReceiver(myBroadCost, filter);
+
+        //获取屏幕宽
         DisplayMetrics mDisplayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(mDisplayMetrics);
         int width = mDisplayMetrics.widthPixels;
+
         viewPagerAdapter = new ShowViewPagerAdapter(sContext, width);
-        //添加图片
-        pictureDatas.add(new ShowPictureData("school.jpg"));
-        pictureDatas.add(new ShowPictureData("school.jpg"));
-        pictureDatas.add(new ShowPictureData("school.jpg"));
-        viewPagerAdapter.setPictureDatas(pictureDatas);
         viewPager.setAdapter(viewPagerAdapter);
         //设置切换动画
         viewPager.setPageTransformer(true, new DepthPageTransformer());
@@ -117,5 +126,34 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
             case R.id.LlNew:
                 break;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        notesDataChange();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        pictureDatas.clear();
+    }
+
+    public class MyBroadCost extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            notesDataChange();
+        }
+    }
+
+    private void notesDataChange() {
+        pictureDatas.clear();
+        List<ItemTimeData> itemTimeDatas = OrmInstence.getOrmInstence().serchAllData(ItemTimeData.class);
+        for (int i = 0; i < itemTimeDatas.size(); i++) {
+            String name = itemTimeDatas.get(i).getPictureName();
+            pictureDatas.add(new ShowPictureData(name));
+        }
+        viewPagerAdapter.setPictureDatas(pictureDatas);
     }
 }
