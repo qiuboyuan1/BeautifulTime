@@ -72,17 +72,13 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
         int width = mDisplayMetrics.widthPixels;
 
         viewPagerAdapter = new ShowViewPagerAdapter(sContext, width);
-// HEAD
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setOffscreenPageLimit(2);
 
-        //添加图片
-        pictureDatas.add(new ShowPictureData("school.jpg"));
-        pictureDatas.add(new ShowPictureData("school.jpg"));
-        pictureDatas.add(new ShowPictureData("school.jpg"));
-        viewPagerAdapter.setPictureDatas(pictureDatas);
-        viewPager.getContentDescription();
-        viewPager.setAdapter(viewPagerAdapter);
+
+//        viewPagerAdapter.setPictureDatas(pictureDatas);
+//        viewPager.getContentDescription();
+//        viewPager.setAdapter(viewPagerAdapter);
         //feature/修复BUG
         //设置切换动画
         viewPager.setPageTransformer(true, new DepthPageTransformer());
