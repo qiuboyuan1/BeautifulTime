@@ -20,14 +20,19 @@ public class ShowAnimation {
     private ImageView imageView;
     private LinearLayout LlEdit, LlDownload, LlDelete, LlNew;
     private MyViewPager myViewPager;
+    //frangment传过来获取屏幕的大小的
+    private int width;
 
-    public ShowAnimation(LinearLayout LlEdit, LinearLayout LlDownload, LinearLayout LlDelete, LinearLayout LlNew) {
+    public ShowAnimation(LinearLayout LlEdit, LinearLayout LlDownload, LinearLayout LlDelete, LinearLayout LlNew,int width) {
         this.LlEdit = LlEdit;
         this.LlDownload = LlDownload;
         this.LlDelete = LlDelete;
         this.LlNew = LlNew;
+        this.width = width;
         timeCount = new TimeCount(1800, 1000);
+
     }
+
 
     public void setImageView(ImageView imageView) {
         this.imageView = imageView;
@@ -37,6 +42,7 @@ public class ShowAnimation {
     public void setMyViewPager(MyViewPager myViewPager) {
         this.myViewPager = myViewPager;
     }
+
 
 
     public void ShowView() {
@@ -66,12 +72,14 @@ public class ShowAnimation {
         }
     }
 
-    private void setAnimatorBack(Object view, int duration) {
-        ObjectAnimator.ofFloat(view, "translationX", 750, 0).setDuration(duration).start();
-    }
+
 
     private void setAnimator(Object view, int duration) {
-        ObjectAnimator.ofFloat(view, "translationX", 0, 800, 700, 750).setDuration(duration).start();
+        ObjectAnimator.ofFloat(view, "translationX", 0, width/2+150, width/4+150, width/3+150).setDuration(duration).start();
+
+    }
+    private void setAnimatorBack(Object view, int duration) {
+        ObjectAnimator.ofFloat(view, "translationX", width/3+150, 0).setDuration(duration).start();
     }
 
     class TimeCount extends CountDownTimer {

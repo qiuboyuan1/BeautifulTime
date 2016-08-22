@@ -69,7 +69,7 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
         //获取屏幕宽
         DisplayMetrics mDisplayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(mDisplayMetrics);
-        int width = mDisplayMetrics.widthPixels;
+        final int width = mDisplayMetrics.widthPixels;
 
         viewPagerAdapter = new ShowViewPagerAdapter(sContext, width);
         viewPager.setAdapter(viewPagerAdapter);
@@ -100,7 +100,7 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
             }
         });
         //设置弹出编辑动画
-        showAnimation = new ShowAnimation(LlEdit, LlDownload, LlDelete, LlNew);
+        showAnimation = new ShowAnimation(LlEdit, LlDownload, LlDelete, LlNew, width);
         showAnimation.setMyViewPager(viewPager);
         viewPagerAdapter.setOnImageViewClickListener(new ShowViewPagerAdapter.OnImageViewClickListener() {
 
@@ -131,7 +131,7 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
             case R.id.LlDownload:
                 break;
             case R.id.LlDelete:
-
+                viewPager.removeAllViews();
                 break;
             case R.id.LlNew:
                 break;
