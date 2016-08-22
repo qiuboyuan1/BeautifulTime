@@ -167,10 +167,13 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
     private void notesDataChange() {
         pictureDatas.clear();
         List<ItemTimeData> itemTimeDatas = OrmInstence.getOrmInstence().serchAllData(ItemTimeData.class);
-        for (int i = 0; i < itemTimeDatas.size(); i++) {
+        int dataSize=itemTimeDatas.size();
+        for (int i = 0; i < dataSize; i++) {
             String name = itemTimeDatas.get(i).getPictureName();
             pictureDatas.add(new ShowPictureData(name));
         }
+        viewPager.setAdapter(viewPagerAdapter);
         viewPagerAdapter.setPictureDatas(pictureDatas);
+        viewPagerAdapter.notifyDataSetChanged();
     }
 }
