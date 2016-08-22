@@ -69,6 +69,7 @@ public class ShowViewPagerAdapter extends PagerAdapter {
         return view;
     }
 
+
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
@@ -77,5 +78,10 @@ public class ShowViewPagerAdapter extends PagerAdapter {
     //内部接口
     public interface OnImageViewClickListener {
         void OnImageViewListener(ImageView imageView);
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
     }
 }
