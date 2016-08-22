@@ -8,10 +8,14 @@ import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,7 +51,6 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
     private int color;
     private MyBroadCast myBroadCast;
     private DatePicker datePicker;//日期选择器
-    private LinearLayout titleLl;//标题
     private LinearLayout dateLl;//日期
     private LinearLayout repictLl;//
     private LinearLayout colorLl;//颜色
@@ -58,7 +61,12 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
     private ItemTimeData itemTimeData;
     private String[] picture = new String[]{"bady.jpg", "birthday.jpg", "sport.jpg", "love.jpg", "school.jpg"};
     private int position;
-
+    private RelativeLayout layout;
+    private EditText titleEt;
+    private TextView titleTv;
+    private boolean isVisibility = false;//显示title
+    private Animation animationvisible;
+    private Animation animationInvisible;
 
     @Override
     protected int setLayout() {
@@ -67,13 +75,15 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
 
     @Override
     protected void initView() {
+        layout = byView(R.id.time_choose_rl);
+        titleEt = byView(R.id.time_choose_title_et);
+        titleTv = byView(R.id.time_choose_title_tv);
         recyclerView = byView(R.id.one_recucle_view);
         imageView = byView(R.id.three_iv);
         backIbtn = byView(R.id.three_back_iv_btn);
         okIbtn = byView(R.id.three_ok_iv_btn);
         colorTv = byView(R.id.time_choose_color_tv);
         dateLl = byView(R.id.time_choose_date_ll);
-        titleLl = byView(R.id.time_choose_title_ll);
         repictLl = byView(R.id.time_choose_repit_ll);
         colorLl = byView(R.id.time_choose_color_ll);
         datePicker = byView(R.id.time_choose_date_pick);
@@ -114,7 +124,10 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
         okIbtn.setOnClickListener(this);
         colorTv.setOnClickListener(this);
         dateLl.setOnClickListener(this);
-        titleLl.setOnClickListener(this);
+        layout.setOnClickListener(this);
+        titleTv.setOnClickListener(this);
+        animationvisible = AnimationUtils.loadAnimation(this, R.anim.scale_visible);
+        animationInvisible = AnimationUtils.loadAnimation(this, R.anim.scale_invisible);
         //默认背景色
         colorTv.setBackgroundColor(Color.rgb(64, 180, 214));
         //注册广播
@@ -164,11 +177,31 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
                 isVisibilty();
 
                 break;
-            case R.id.time_choose_title_ll:
-
-
+            case R.id.time_choose_rl:
+                if (isVisibility) {
+                    MyVisibity();
+                }
+                break;
+            case R.id.time_choose_title_tv:
+                if (!isVisibility) {
+                    MyInVisibity();
+                }
                 break;
         }
+    }
+
+    private void MyVisibity() {
+        titleTv.setVisibility(View.VISIBLE);
+        titleEt.setVisibility(View.INVISIBLE);
+        titleEt.startAnimation(animationInvisible);
+        isVisibility = false;
+    }
+
+    private void MyInVisibity() {
+        titleTv.setVisibility(View.INVISIBLE);
+        titleEt.setVisibility(View.VISIBLE);
+        titleEt.startAnimation(animationvisible);
+        isVisibility = true;
     }
 
     /**
