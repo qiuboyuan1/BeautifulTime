@@ -1,5 +1,6 @@
 package com.qiu.beautifultime.ui.fragment;
 
+
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.BroadcastReceiver;
@@ -7,15 +8,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.CountDownTimer;
+
+
+import android.content.Intent;
+
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.qiu.beautifultime.R;
 import com.qiu.beautifultime.data.ItemTimeData;
@@ -24,6 +25,7 @@ import com.qiu.beautifultime.db.OrmInstence;
 import com.qiu.beautifultime.tools.DepthPageTransformer;
 import com.qiu.beautifultime.tools.MyViewPager;
 import com.qiu.beautifultime.tools.ShowAnimation;
+import com.qiu.beautifultime.ui.activity.BeautifulTimeChooseActivity;
 import com.qiu.beautifultime.ui.adapter.ShowViewPagerAdapter;
 
 import java.util.ArrayList;
@@ -70,8 +72,18 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
         int width = mDisplayMetrics.widthPixels;
 
         viewPagerAdapter = new ShowViewPagerAdapter(sContext, width);
+// HEAD
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setOffscreenPageLimit(2);
+
+        //添加图片
+        pictureDatas.add(new ShowPictureData("school.jpg"));
+        pictureDatas.add(new ShowPictureData("school.jpg"));
+        pictureDatas.add(new ShowPictureData("school.jpg"));
+        viewPagerAdapter.setPictureDatas(pictureDatas);
+        viewPager.getContentDescription();
+        viewPager.setAdapter(viewPagerAdapter);
+        //feature/修复BUG
         //设置切换动画
         viewPager.setPageTransformer(true, new DepthPageTransformer());
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -98,18 +110,18 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
 
             @Override
             public void OnImageViewListener(final ImageView imageView) {
-                Log.d("TAGGG", "OnImageViewListener() called with: " + "imageView = [" + imageView + "]");
+
                 if (imageView.getContentDescription().equals(position + "")) {
+
                     showAnimation.setImageView(imageView);
 
                     showAnimation.ShowView();
                 }
-
             }
         });
 
-
     }
+
 
     private int position;
 
@@ -117,7 +129,8 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.LlEdit:
-                Toast.makeText(sContext, "编辑成功", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(sContext, BeautifulTimeChooseActivity.class);
+                startActivity(intent);
                 break;
             case R.id.LlDownload:
                 break;
@@ -127,6 +140,7 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
             case R.id.LlNew:
                 break;
         }
+
     }
 
     @Override
