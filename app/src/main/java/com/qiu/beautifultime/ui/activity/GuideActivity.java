@@ -39,7 +39,7 @@ public class GuideActivity extends Activity implements View.OnClickListener {
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                startActivity(new Intent(GuideActivity.this,SettingActivity.class));
+                startActivity(new Intent(GuideActivity.this,MainActivity.class));
             }
         });
         tvJump.setOnClickListener(this);
@@ -47,7 +47,7 @@ public class GuideActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        startActivity(new Intent(GuideActivity.this,SettingActivity.class));
+        startActivity(new Intent(GuideActivity.this,MainActivity.class));
         finish();
     }
 }
