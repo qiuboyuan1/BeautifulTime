@@ -74,9 +74,7 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
         filter.addAction("xxx");
         sContext.registerReceiver(myBroadCost, filter);
 
-        Intent intent = new Intent("cccc");
-        intent.putExtra("skipNotesFragment",2);
-        sContext.sendBroadcast(intent);
+
 
         //获取屏幕宽
         DisplayMetrics mDisplayMetrics = new DisplayMetrics();
@@ -143,7 +141,9 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
             case R.id.LlNew:
                 break;
             case R.id.llReturn:
-
+                Intent intent1 = new Intent("cccc");
+                intent1.putExtra("skipNotesFragment",2);
+                sContext.sendBroadcast(intent1);
 
                 break;
         }
