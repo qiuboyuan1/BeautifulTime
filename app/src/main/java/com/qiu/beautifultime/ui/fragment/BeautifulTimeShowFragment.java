@@ -12,11 +12,15 @@ import android.os.CountDownTimer;
 
 import android.content.Intent;
 
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.qiu.beautifultime.R;
 import com.qiu.beautifultime.data.ItemTimeData;
@@ -40,8 +44,9 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
     private MyViewPager viewPager;
     private ShowViewPagerAdapter viewPagerAdapter;
     private List<ShowPictureData> pictureDatas = new ArrayList<>();
-    private LinearLayout LlEdit, LlDownload, LlDelete, LlNew;
+    private LinearLayout LlEdit, LlDownload, LlDelete, LlNew,llReturn;
     private ShowAnimation showAnimation;
+
     private MyBroadCost myBroadCost;
 
     @Override
@@ -51,11 +56,14 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
 
     @Override
     protected void initView() {
+
         viewPager = byView(R.id.beautiful_time_show_vp);
         LlEdit = byView(R.id.LlEdit);
         LlDownload = byView(R.id.LlDownload);
         LlDelete = byView(R.id.LlDelete);
         LlNew = byView(R.id.LlNew);
+        llReturn = byView(R.id.llReturn);
+        llReturn.setOnClickListener(this);
         LlEdit.setOnClickListener(this);
     }
 
@@ -65,6 +73,10 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
         IntentFilter filter = new IntentFilter();
         filter.addAction("xxx");
         sContext.registerReceiver(myBroadCost, filter);
+
+        Intent intent = new Intent("cccc");
+        intent.putExtra("skipNotesFragment",2);
+        sContext.sendBroadcast(intent);
 
         //获取屏幕宽
         DisplayMetrics mDisplayMetrics = new DisplayMetrics();
@@ -129,6 +141,10 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
                 viewPager.removeAllViews();
                 break;
             case R.id.LlNew:
+                break;
+            case R.id.llReturn:
+
+
                 break;
         }
 
