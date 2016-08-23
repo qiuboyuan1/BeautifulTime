@@ -75,11 +75,6 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setOffscreenPageLimit(2);
 
-
-//        viewPagerAdapter.setPictureDatas(pictureDatas);
-//        viewPager.getContentDescription();
-//        viewPager.setAdapter(viewPagerAdapter);
-        //feature/修复BUG
         //设置切换动画
         viewPager.setPageTransformer(true, new DepthPageTransformer());
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

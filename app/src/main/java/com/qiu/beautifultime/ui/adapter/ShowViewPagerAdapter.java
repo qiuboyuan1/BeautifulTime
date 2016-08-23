@@ -80,8 +80,4 @@ public class ShowViewPagerAdapter extends PagerAdapter {
         void OnImageViewListener(ImageView imageView);
     }
 
-    @Override
-    public int getItemPosition(Object object) {
-        return POSITION_NONE;
-    }
 }
