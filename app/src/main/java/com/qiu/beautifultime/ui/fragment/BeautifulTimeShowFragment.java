@@ -184,7 +184,7 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
         int dataSize=itemTimeDatas.size();
         for (int i = 0; i < dataSize; i++) {
             String name = itemTimeDatas.get(i).getPictureName();
-            pictureDatas.add(new ShowPictureData(name));
+            pictureDatas.add(0,new ShowPictureData(name));
         }
         viewPager.setAdapter(viewPagerAdapter);
         viewPagerAdapter.setPictureDatas(pictureDatas);
