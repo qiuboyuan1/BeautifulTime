@@ -94,13 +94,13 @@ public class OrmInstence {
     }
 
     /**
-     * 按日期条件删除
+     * 按时间条件删除
      * @param tClass 表名
      * @param filed 列名
      * @param value 删除对象
      * @param <T>
      */
-    public <T> void delValueData(Class<T> tClass, String filed, String value) {
+    public <T> void delValueData(Class<T> tClass, String filed, Long value) {
         liteOrm.delete(WhereBuilder.create(tClass).where(filed + "=?", new Object[]{value}));
     }
 

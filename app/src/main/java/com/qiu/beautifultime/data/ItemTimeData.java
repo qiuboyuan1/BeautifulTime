@@ -15,15 +15,17 @@ public class ItemTimeData {
     private int date;
     private int color;
     private String pictureName;
+    private Long recordTime;
 
     public ItemTimeData() {
     }
 
-    public ItemTimeData(String title, int date, int color, String pictureName) {
+    public ItemTimeData(String title, int date, int color, String pictureName,Long recordTime) {
         this.title = title;
         this.date = date;
         this.color = color;
         this.pictureName = pictureName;
+        this.recordTime=recordTime;
     }
 
     public ItemTimeData(int id, String title, int date, int color, String pictureName) {
@@ -32,6 +34,14 @@ public class ItemTimeData {
         this.date = date;
         this.color = color;
         this.pictureName = pictureName;
+    }
+
+    public Long getRecordTime() {
+        return recordTime;
+    }
+
+    public void setRecordTime(Long recordTime) {
+        this.recordTime = recordTime;
     }
 
     public int getId() {

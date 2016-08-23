@@ -81,6 +81,9 @@ public class TimeItemRecycleViewAdapter extends RecyclerView.Adapter<TimeItemRec
                 @Override
                 public void onClick(View v) {
                     int pos = holder.getLayoutPosition();
+                    Intent intent = new Intent("xxx");
+                    intent.putExtra("itemPos",pos);
+                    context.sendBroadcast(intent);
                     clickListener.itemClick(pos);
                 }
             });
@@ -127,7 +130,7 @@ public class TimeItemRecycleViewAdapter extends RecyclerView.Adapter<TimeItemRec
 
     @Override
     public void onItemDismiss(int position) {
-        OrmInstence.getOrmInstence().delValueData(ItemTimeData.class, "date", String.valueOf(timeDatas.get(position).getDate()));
+        OrmInstence.getOrmInstence().delValueData(ItemTimeData.class, "recordTime", timeDatas.get(position).getRecordTime());
         //通知show界面数据变化
         Intent intent=new Intent("xxx");
         context.sendBroadcast(intent);

@@ -153,7 +153,9 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
     @Override
     public void onResume() {
         super.onResume();
-        notesDataChange();
+        //通知show界面数据变化
+        Intent intent = new Intent("xxx");
+        sContext.sendBroadcast(intent);
     }
 
     @Override
@@ -171,11 +173,12 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
     public class MyBroadCost extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            notesDataChange();
+            notesDataChange(intent);
         }
     }
 
-    private void notesDataChange() {
+    private void notesDataChange(Intent intent) {
+        int pos = intent.getIntExtra("itemPos", -1);
         pictureDatas.clear();
         List<ItemTimeData> itemTimeDatas = OrmInstence.getOrmInstence().serchAllData(ItemTimeData.class);
         int dataSize=itemTimeDatas.size();
@@ -185,6 +188,9 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
         }
         viewPager.setAdapter(viewPagerAdapter);
         viewPagerAdapter.setPictureDatas(pictureDatas);
+        if (pos >= 0) {
+            viewPager.setCurrentItem(pos);
+        }
         viewPagerAdapter.notifyDataSetChanged();
     }
 }

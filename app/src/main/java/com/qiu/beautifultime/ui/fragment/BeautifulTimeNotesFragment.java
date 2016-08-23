@@ -81,7 +81,7 @@ public class BeautifulTimeNotesFragment extends AbsBaseFragment implements View.
         List<ItemTimeData> allDatas = OrmInstence.getOrmInstence().serchAllData(ItemTimeData.class);
         for (int i = 0; i < allDatas.size(); i++) {
             int pos=allDatas.size() - 1 - i;
-            timeDatas.add(new ItemTimeData(allDatas.get(pos).getTitle(), allDatas.get(pos).getDate(),allDatas.get(pos).getColor(),allDatas.get(pos).getPictureName()));
+            timeDatas.add(new ItemTimeData(allDatas.get(pos).getTitle(), allDatas.get(pos).getDate(),allDatas.get(pos).getColor(),allDatas.get(pos).getPictureName(),allDatas.get(pos).getRecordTime()));
         }
         itemRecycleViewAdapter.setTimeDatas(timeDatas);
         recordItem.setAdapter(itemRecycleViewAdapter);

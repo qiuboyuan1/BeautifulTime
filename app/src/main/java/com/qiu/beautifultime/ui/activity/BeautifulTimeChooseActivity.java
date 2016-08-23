@@ -153,12 +153,14 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
                 itemTimeData = new ItemTimeData();
                 dataSize = TimeItemRecycleViewAdapter.timeDatas.size();
                 dataSize++;
+                Long recordTime = System.currentTimeMillis();
                 itemTimeData.setDate(chooseDate);
                 itemTimeData.setColor(color);
                 itemTimeData.setPictureName(picture[position]);
+                itemTimeData.setRecordTime(recordTime);
                 adapter.addItem(0, itemTimeData);
                 //存储数据
-                OrmInstence.getOrmInstence().addOneData(new ItemTimeData("asd", chooseDate, color, picture[position]));
+                OrmInstence.getOrmInstence().addOneData(new ItemTimeData("asd", chooseDate, color, picture[position],recordTime));
 
                 //发送到notesfragment
                 Intent intents = new Intent("aa");

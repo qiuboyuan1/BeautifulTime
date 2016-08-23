@@ -55,7 +55,6 @@ public class SensorImg implements SensorEventListener {
 
         matrix = new Matrix();
         matrix.postScale(1f, 1f, 0.5f, 0.5f);
-        matrix.postTranslate(-540, 540);
         imageView.setImageMatrix(matrix);
         imageView.invalidate();
         imageView.startAnimation(getAnimation(imageView));
