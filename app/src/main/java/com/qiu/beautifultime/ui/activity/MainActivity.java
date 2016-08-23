@@ -1,6 +1,9 @@
 package com.qiu.beautifultime.ui.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -35,6 +38,11 @@ public class MainActivity extends AbsBaseActivity {
 
     @Override
     protected void initData() {
+        MySendBroadTransactin sendBroadTransactin = new MySendBroadTransactin();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("cccc");
+        registerReceiver(sendBroadTransactin, filter);
+
         fragments = new ArrayList<>();
         fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
         fragments.add(new BeautifulTimeNotesFragment());
@@ -43,5 +51,24 @@ public class MainActivity extends AbsBaseActivity {
         viewPager.setAdapter(fragmentAdapter);
         viewPager.setPageTransformer(true, new FragmentOageTrans());
     }
+    public class MySendBroadTransactin extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int a = intent.getIntExtra("skipNotesFragment", 0);
 
+            switch (a) {
+                case 0:
+                    break;
+                case 1:
+                    viewPager.setCurrentItem(1);
+                    viewPager.setPageTransformer(true, new FragmentOageTrans());
+                    break;
+                case 2:
+                    viewPager.setCurrentItem(0);
+                    viewPager.setPageTransformer(true, new FragmentOageTrans());
+                    break;
+            }
+
+        }
+    }
 }
