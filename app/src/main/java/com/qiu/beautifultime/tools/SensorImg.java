@@ -37,7 +37,7 @@ public class SensorImg implements SensorEventListener {
 
     private static SensorImg sensorImg;
     private int width;
-    private final int bitmapHigth;
+    private int bitmapHigth;
 
     public SensorImg(Context context, ImageView imageView, String s, int width, int height) {
         this.width = width;
