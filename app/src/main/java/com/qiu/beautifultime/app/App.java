@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.qiu.beautifultime.db.OrmInstence;
 import com.qiu.beautifultime.tools.LockPatternUtils;
+import com.qiu.beautifultime.tools.SpInstence;
 
 /**
  * app类对外提供全局的context
@@ -21,6 +22,7 @@ public class App extends Application {
         sContext = getApplicationContext();
         LockPatternUtils.CSHSp(sContext);
         OrmInstence.getOrmInstence().setOrmInstence();
+        SpInstence.getInstence().initalizeSp(sContext);
     }
 
 

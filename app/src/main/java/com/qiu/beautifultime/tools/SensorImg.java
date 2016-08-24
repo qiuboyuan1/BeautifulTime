@@ -37,32 +37,35 @@ public class SensorImg implements SensorEventListener {
 
     private static SensorImg sensorImg;
     private int width;
+    private final int bitmapHigth;
 
-    public SensorImg(Context context, ImageView imageView, String s, int width) {
+    public SensorImg(Context context, ImageView imageView, String s, int width, int height) {
         this.width = width;
         // 获取系统传感器服务
         sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
 
         //设置监听器监听加速度传感器（重力感应器）的状态，精度为普通（SENSOR_DELAY_NORMAL）
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
-//        Bitmap bitmap1 = ((BitmapDrawable) imageView.getBackground()).getBitmap();
-//        if (!bitmap1.isRecycled()) {
-//            bitmap1.recycle();
-//        }
         bitmap = ReadAssets.ReadAssets(context, s);
+        bitmapHigth = bitmap.getHeight();
         imageView.setImageBitmap(bitmap);
 
 
         matrix = new Matrix();
-        matrix.postScale(1f, 1f, 0.5f, 0.5f);
+        if (height < bitmapHigth) {
+            matrix.postScale(height / bitmapHigth, height / bitmapHigth);
+        } else if (height >= bitmapHigth) {
+            matrix.postScale(bitmapHigth / height, bitmapHigth / height);
+        }
+//        matrix.postScale(1f, 1f, 0.5f, 0.5f);
         imageView.setImageMatrix(matrix);
         imageView.invalidate();
         imageView.startAnimation(getAnimation(imageView));
     }
 
-    public static void getSensorImg(Context context, ImageView imageView, String s, int width) {
+    public static void getSensorImg(Context context, ImageView imageView, String s, int width, int height) {
 
-        sensorImg = new SensorImg(context, imageView, s, width);
+        sensorImg = new SensorImg(context, imageView, s, width, height);
     }
 
 

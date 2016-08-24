@@ -80,8 +80,9 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
         DisplayMetrics mDisplayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(mDisplayMetrics);
         final int width = mDisplayMetrics.widthPixels;
+        final int height=mDisplayMetrics.heightPixels;
 
-        viewPagerAdapter = new ShowViewPagerAdapter(sContext, width);
+        viewPagerAdapter = new ShowViewPagerAdapter(sContext, width,height);
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setOffscreenPageLimit(2);
 

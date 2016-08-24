@@ -150,6 +150,7 @@
                     android:id="@+id/time_choose_color_tv"
                     android:layout_width="90dp"
                     android:layout_height="45dp"
+                    android:background="#27b7d7"
                     android:gravity="center" />
             </LinearLayout>
 

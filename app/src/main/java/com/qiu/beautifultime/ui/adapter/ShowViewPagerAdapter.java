@@ -6,6 +6,7 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import com.qiu.beautifultime.R;
 import com.qiu.beautifultime.data.ShowPictureData;
 import com.qiu.beautifultime.tools.SensorImg;
@@ -22,7 +23,7 @@ public class ShowViewPagerAdapter extends PagerAdapter {
     private List<ShowPictureData> pictureDatas;
     private boolean asd = true;
 
-
+    private int height;
     private int width;
     private OnImageViewClickListener onImageViewClickListener;
 
@@ -30,9 +31,10 @@ public class ShowViewPagerAdapter extends PagerAdapter {
         this.onImageViewClickListener = onImageViewClickListener;
     }
 
-    public ShowViewPagerAdapter(Context context, int width) {
+    public ShowViewPagerAdapter(Context context, int width, int height) {
         this.context = context;
         this.width = width;
+        this.height = height;
     }
 
     public void setPictureDatas(List<ShowPictureData> pictureDatas) {
@@ -64,7 +66,7 @@ public class ShowViewPagerAdapter extends PagerAdapter {
 
             }
         });
-        SensorImg.getSensorImg(context, imageView, pictureDatas.get(position).getImgName(), 920);
+        SensorImg.getSensorImg(context, imageView, pictureDatas.get(position).getImgName(), width,height);
         container.addView(view);
         return view;
     }

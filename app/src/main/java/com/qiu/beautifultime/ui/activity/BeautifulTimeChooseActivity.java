@@ -7,6 +7,8 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -26,6 +28,7 @@ import com.qiu.beautifultime.data.ShowPictureData;
 import com.qiu.beautifultime.db.OrmInstence;
 import com.qiu.beautifultime.tools.DateCount;
 import com.qiu.beautifultime.tools.SensorImg;
+import com.qiu.beautifultime.tools.SpInstence;
 import com.qiu.beautifultime.ui.adapter.OneRecyclerViewAdapter;
 import com.qiu.beautifultime.ui.adapter.TimeItemRecycleViewAdapter;
 
@@ -59,7 +62,7 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
     private TextView dateTv;//显示日期
     private String dates;//用于显示在当前的日期按钮上
     private ItemTimeData itemTimeData;
-    private String[] picture = new String[]{"bady.jpg", "birthday.jpg", "sport.jpg", "love.jpg", "school.jpg"};
+    private String[] picture = new String[]{"baby.jpg", "birthday.jpg", "sport.jpg", "love.jpg", "school.jpg"};
     private int position;
     private RelativeLayout layout;
     private EditText titleEt;
@@ -67,6 +70,7 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
     private boolean isVisibility = false;//显示title
     private Animation animationvisible;
     private Animation animationInvisible;
+    private String content = "";//输入的内容
 
     @Override
     protected int setLayout() {
@@ -92,6 +96,19 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
 
     @Override
     protected void initData() {
+        //判断之前是否有选择过颜色和日期
+        int color = SpInstence.getInstence().getNextColor();
+        if (color != 0xff000000) {
+            colorTv.setBackgroundColor(color);
+            this.color = color;
+        }
+        //获取屏幕宽
+        DisplayMetrics mDisplayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(mDisplayMetrics);
+        final int width = mDisplayMetrics.widthPixels;
+        final int height = mDisplayMetrics.heightPixels;
+
+
         //设置当前系统时间,如果dates为空则返回当前系统是时间
         Long time = System.currentTimeMillis();
         SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
@@ -116,7 +133,7 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
             @Override
             public void MyOnClick(int pos) {
                 position = pos;
-                SensorImg.getSensorImg(BeautifulTimeChooseActivity.this, imageView, picture[pos], 920);
+                SensorImg.getSensorImg(BeautifulTimeChooseActivity.this, imageView, picture[pos], width, height);
             }
         });
 
@@ -128,8 +145,6 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
         titleTv.setOnClickListener(this);
         animationvisible = AnimationUtils.loadAnimation(this, R.anim.scale_visible);
         animationInvisible = AnimationUtils.loadAnimation(this, R.anim.scale_invisible);
-        //默认背景色
-        colorTv.setBackgroundColor(Color.rgb(64, 180, 214));
         //注册广播
         myBroadCast = new MyBroadCast();
         IntentFilter intentFilter = new IntentFilter();
@@ -145,10 +160,9 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
                 BeautifulTimeChooseActivity.this.finish();
                 break;
             case R.id.three_ok_iv_btn:
-                if (color == 0) {
-                    color = 0;
-                }
-
+                //存储当前color的状态
+                SpInstence.getInstence().putColor(color);
+                //往适配器里添加一条数据
                 TimeItemRecycleViewAdapter adapter = new TimeItemRecycleViewAdapter(this);
                 itemTimeData = new ItemTimeData();
                 dataSize = TimeItemRecycleViewAdapter.timeDatas.size();
@@ -158,9 +172,10 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
                 itemTimeData.setColor(color);
                 itemTimeData.setPictureName(picture[position]);
                 itemTimeData.setRecordTime(recordTime);
+                itemTimeData.setPictureName(content);
                 adapter.addItem(0, itemTimeData);
                 //存储数据
-                OrmInstence.getOrmInstence().addOneData(new ItemTimeData("asd", chooseDate, color, picture[position],recordTime));
+                OrmInstence.getOrmInstence().addOneData(new ItemTimeData(content, chooseDate, color, picture[position], recordTime));
 
                 //发送到notesfragment
                 Intent intents = new Intent("aa");
@@ -197,6 +212,10 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
         titleEt.setVisibility(View.INVISIBLE);
         titleEt.startAnimation(animationInvisible);
         isVisibility = false;
+        /**
+         * 获取输入的文字
+         */
+        getInputText();
     }
 
     private void MyInVisibity() {
@@ -250,6 +269,11 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
 
             }
         });
+    }
+
+    public void getInputText() {
+        content = titleEt.getText().toString();
+        Toast.makeText(this, "" + content, Toast.LENGTH_SHORT).show();
     }
 
     class MyBroadCast extends BroadcastReceiver {
