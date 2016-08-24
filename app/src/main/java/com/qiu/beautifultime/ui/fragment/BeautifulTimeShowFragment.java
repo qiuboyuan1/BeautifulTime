@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
 
 
@@ -20,6 +21,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import com.qiu.beautifultime.R;
@@ -27,11 +29,13 @@ import com.qiu.beautifultime.data.ItemTimeData;
 import com.qiu.beautifultime.data.ShowPictureData;
 import com.qiu.beautifultime.db.OrmInstence;
 import com.qiu.beautifultime.tools.DepthPageTransformer;
+import com.qiu.beautifultime.tools.MyNumberPicker;
 import com.qiu.beautifultime.tools.MyViewPager;
 import com.qiu.beautifultime.tools.ShowAnimation;
 import com.qiu.beautifultime.ui.activity.BeautifulTimeChooseActivity;
 import com.qiu.beautifultime.ui.adapter.ShowViewPagerAdapter;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +50,7 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
     private List<ShowPictureData> pictureDatas = new ArrayList<>();
     private LinearLayout LlEdit, LlDownload, LlDelete, LlNew,llReturn;
     private ShowAnimation showAnimation;
-
+    private MyNumberPicker myNumberPicker;
     private MyBroadCost myBroadCost;
 
     @Override
@@ -63,8 +67,10 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
         LlDelete = byView(R.id.LlDelete);
         LlNew = byView(R.id.LlNew);
         llReturn = byView(R.id.llReturn);
+        myNumberPicker = byView(R.id.np);
         llReturn.setOnClickListener(this);
         LlEdit.setOnClickListener(this);
+//        setMyNumberPicker();
     }
 
     @Override
@@ -194,4 +200,31 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
         }
         viewPagerAdapter.notifyDataSetChanged();
     }
+//    public void setMyNumberPicker(){
+//        myNumberPicker.setMinValue(10);
+//        myNumberPicker.setMaxValue(20);
+//        myNumberPicker.setValue(1);
+//        myNumberPicker.setWrapSelectorWheel(false);
+//        setNumberPickerDividerColor(myNumberPicker, 0x1111);
+//    }
+
+    /**
+     * 让选择器分隔线取消
+     * @param numberPicker
+     * @param color
+     */
+//    public static void setNumberPickerDividerColor(NumberPicker numberPicker, int color) {
+//        Field[] pickerFields = NumberPicker.class.getDeclaredFields();
+//        for (Field SelectionDividerField : pickerFields) {
+//            if (SelectionDividerField.getName().equals("mSelectionDivider")) {
+//                SelectionDividerField.setAccessible(true);
+//                try {
+//                    SelectionDividerField.set(numberPicker, new ColorDrawable(color));
+//                } catch (IllegalAccessException e) {
+//                    e.printStackTrace();
+//                }
+//                break;
+//            }
+//        }
+//    }
 }
