@@ -48,9 +48,8 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
     private MyViewPager viewPager;
     private ShowViewPagerAdapter viewPagerAdapter;
     private List<ShowPictureData> pictureDatas = new ArrayList<>();
-    private LinearLayout LlEdit, LlDownload, LlDelete, LlNew,llReturn;
+    private LinearLayout LlEdit, LlDownload, LlDelete, LlNew, llReturn;
     private ShowAnimation showAnimation;
-    private MyNumberPicker myNumberPicker;
     private MyBroadCost myBroadCost;
 
     @Override
@@ -67,10 +66,9 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
         LlDelete = byView(R.id.LlDelete);
         LlNew = byView(R.id.LlNew);
         llReturn = byView(R.id.llReturn);
-        myNumberPicker = byView(R.id.np);
         llReturn.setOnClickListener(this);
         LlEdit.setOnClickListener(this);
-//        setMyNumberPicker();
+
     }
 
     @Override
@@ -80,15 +78,12 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
         filter.addAction("xxx");
         sContext.registerReceiver(myBroadCost, filter);
 
-
-
         //获取屏幕宽
         DisplayMetrics mDisplayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(mDisplayMetrics);
         final int width = mDisplayMetrics.widthPixels;
-        final int height=mDisplayMetrics.heightPixels;
-
-        viewPagerAdapter = new ShowViewPagerAdapter(sContext, width,height);
+        final int height = mDisplayMetrics.heightPixels;
+        viewPagerAdapter = new ShowViewPagerAdapter(sContext, width, height);
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setOffscreenPageLimit(2);
 
@@ -149,9 +144,8 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
                 break;
             case R.id.llReturn:
                 Intent intent1 = new Intent("cccc");
-                intent1.putExtra("skipNotesFragment",2);
+                intent1.putExtra("skipNotesFragment", 2);
                 sContext.sendBroadcast(intent1);
-
                 break;
         }
 
@@ -188,10 +182,10 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
         int pos = intent.getIntExtra("itemPos", -1);
         pictureDatas.clear();
         List<ItemTimeData> itemTimeDatas = OrmInstence.getOrmInstence().serchAllData(ItemTimeData.class);
-        int dataSize=itemTimeDatas.size();
+        int dataSize = itemTimeDatas.size();
         for (int i = 0; i < dataSize; i++) {
             String name = itemTimeDatas.get(i).getPictureName();
-            pictureDatas.add(0,new ShowPictureData(name));
+            pictureDatas.add(0, new ShowPictureData(name));
         }
         viewPager.setAdapter(viewPagerAdapter);
         viewPagerAdapter.setPictureDatas(pictureDatas);
@@ -200,31 +194,4 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
         }
         viewPagerAdapter.notifyDataSetChanged();
     }
-//    public void setMyNumberPicker(){
-//        myNumberPicker.setMinValue(10);
-//        myNumberPicker.setMaxValue(20);
-//        myNumberPicker.setValue(1);
-//        myNumberPicker.setWrapSelectorWheel(false);
-//        setNumberPickerDividerColor(myNumberPicker, 0x1111);
-//    }
-
-    /**
-     * 让选择器分隔线取消
-     * @param numberPicker
-     * @param color
-     */
-//    public static void setNumberPickerDividerColor(NumberPicker numberPicker, int color) {
-//        Field[] pickerFields = NumberPicker.class.getDeclaredFields();
-//        for (Field SelectionDividerField : pickerFields) {
-//            if (SelectionDividerField.getName().equals("mSelectionDivider")) {
-//                SelectionDividerField.setAccessible(true);
-//                try {
-//                    SelectionDividerField.set(numberPicker, new ColorDrawable(color));
-//                } catch (IllegalAccessException e) {
-//                    e.printStackTrace();
-//                }
-//                break;
-//            }
-//        }
-//    }
 }

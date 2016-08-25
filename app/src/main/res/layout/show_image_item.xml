@@ -9,5 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="matrix" />
+    <com.qiu.beautifultime.tools.MyNumberPicker
+        android:layout_marginTop="300dp"
+        android:id="@+id/show_item_np"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content">
+    </com.qiu.beautifultime.tools.MyNumberPicker>
 
 </RelativeLayout>
