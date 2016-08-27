@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -52,6 +53,7 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
     private ShowAnimation showAnimation;
     private MyBroadCost myBroadCost;
 
+
     @Override
     protected int setLayout() {
         return R.layout.fragment_beautiful_time_show;
@@ -68,6 +70,7 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
         llReturn = byView(R.id.llReturn);
         llReturn.setOnClickListener(this);
         LlEdit.setOnClickListener(this);
+        LlDelete.setOnClickListener(this);
 
     }
 
@@ -138,7 +141,14 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
             case R.id.LlDownload:
                 break;
             case R.id.LlDelete:
-                viewPager.removeAllViews();
+                List<ItemTimeData> itemTimeDatas = OrmInstence.getOrmInstence().serchAllData(ItemTimeData.class);
+                long data = itemTimeDatas.get(position).getRecordTime();
+                Log.d("BeautifulTimeShowFragme", ""+data+"-----"+position);
+                OrmInstence.getOrmInstence().delValueData(ItemTimeData.class,"recordTime",data);
+                //通知show界面数据变化
+                Intent intent2 = new Intent("xxx");
+                sContext.sendBroadcast(intent2);
+                showAnimation.ShowView();
                 break;
             case R.id.LlNew:
                 break;

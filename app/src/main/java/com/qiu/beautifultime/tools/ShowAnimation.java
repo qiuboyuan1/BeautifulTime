@@ -23,12 +23,13 @@ public class ShowAnimation {
     //frangment传过来获取屏幕的大小的
     private int width;
 
-    public ShowAnimation(LinearLayout LlEdit, LinearLayout LlDownload, LinearLayout LlDelete, LinearLayout LlNew,int width) {
+    public ShowAnimation(LinearLayout LlEdit, LinearLayout LlDownload, LinearLayout LlDelete, LinearLayout LlNew, int width) {
         this.LlEdit = LlEdit;
         this.LlDownload = LlDownload;
         this.LlDelete = LlDelete;
         this.LlNew = LlNew;
         this.width = width;
+
         timeCount = new TimeCount(1800, 1000);
 
     }
@@ -42,7 +43,6 @@ public class ShowAnimation {
     public void setMyViewPager(MyViewPager myViewPager) {
         this.myViewPager = myViewPager;
     }
-
 
 
     public void ShowView() {
@@ -60,10 +60,10 @@ public class ShowAnimation {
 
             setAnimator(LlNew, 1800);
             myViewPager.setScanScroll(false);
+
         } else {
 
             setAnimatorBack(LlEdit, 500);
-
             setAnimatorBack(LlDownload, 600);
             setAnimatorBack(LlDelete, 700);
             setAnimatorBack(LlNew, 800);
@@ -73,13 +73,13 @@ public class ShowAnimation {
     }
 
 
-
     private void setAnimator(Object view, int duration) {
-        ObjectAnimator.ofFloat(view, "translationX", 0, width/2+150, width/4+150, width/3+150).setDuration(duration).start();
+        ObjectAnimator.ofFloat(view, "translationX", 0, width / 2 + 150, width / 4 + 150, width / 3 + 150).setDuration(duration).start();
 
     }
+
     private void setAnimatorBack(Object view, int duration) {
-        ObjectAnimator.ofFloat(view, "translationX", width/3+150, 0).setDuration(duration).start();
+        ObjectAnimator.ofFloat(view, "translationX", width / 3 + 150, 0).setDuration(duration).start();
     }
 
     class TimeCount extends CountDownTimer {

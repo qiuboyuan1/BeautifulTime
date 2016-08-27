@@ -4,18 +4,22 @@ package com.qiu.beautifultime.ui.adapter;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 
 import com.qiu.beautifultime.R;
+import com.qiu.beautifultime.data.ItemTimeData;
 import com.qiu.beautifultime.data.ShowPictureData;
+import com.qiu.beautifultime.db.OrmInstence;
 import com.qiu.beautifultime.tools.MyNumberPicker;
 import com.qiu.beautifultime.tools.SensorImg;
 
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,8 +29,6 @@ import java.util.List;
 public class ShowViewPagerAdapter extends PagerAdapter {
     private Context context;
     private List<ShowPictureData> pictureDatas;
-    private boolean asd = true;
-
     private int height;
     private int width;
     private OnImageViewClickListener onImageViewClickListener;
@@ -62,8 +64,11 @@ public class ShowViewPagerAdapter extends PagerAdapter {
         View view = View.inflate(context, R.layout.show_image_item, null);
         final ImageView imageView = (ImageView) view.findViewById(R.id.show_image_iv);
         MyNumberPicker myNumberPicker = (MyNumberPicker) view.findViewById(R.id.show_item_np);
-        myNumberPicker.setMinValue(10);
-        myNumberPicker.setMaxValue(20);
+        List<ItemTimeData> itemTimeDatas = OrmInstence.getOrmInstence().serchAllData(ItemTimeData.class);
+        int date = itemTimeDatas.get(position).getDate();
+            myNumberPicker.setMinValue(date);
+            myNumberPicker.setMaxValue(date);
+
         myNumberPicker.setValue(1);
         myNumberPicker.setWrapSelectorWheel(false);
         setNumberPickerDividerColor(myNumberPicker, 0x1111);
@@ -76,7 +81,7 @@ public class ShowViewPagerAdapter extends PagerAdapter {
 
             }
         });
-        SensorImg.getSensorImg(context, imageView, pictureDatas.get(position).getImgName(), width,height);
+        SensorImg.getSensorImg(context, imageView, pictureDatas.get(position).getImgName(), width, height);
         container.addView(view);
         return view;
     }
@@ -91,8 +96,10 @@ public class ShowViewPagerAdapter extends PagerAdapter {
     public interface OnImageViewClickListener {
         void OnImageViewListener(ImageView imageView);
     }
+
     /**
      * 让选择器分隔线取消
+     *
      * @param numberPicker
      * @param color
      */

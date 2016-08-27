@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 
-/**
+/**NumberPicker
  * Created by dllo on 16/8/24.
  * 自定义的选择器
  */
@@ -47,7 +47,7 @@ public class MyNumberPicker extends NumberPicker {
         if (view instanceof EditText) {
             //这里修改字体的属性
             ((EditText) view).setTextColor(Color.WHITE);
-//            ((EditText) view).setTextSize();
+            ((EditText) view).setTextSize(50);
         }
     }
 }
