@@ -4,7 +4,7 @@ import com.litesuits.orm.db.annotation.PrimaryKey;
 import com.litesuits.orm.db.enums.AssignType;
 
 /**
- * 设置记录的类
+ * 用户设置记录的类
  * Created by dllo on 16/8/15.
  */
 public class ItemTimeData {

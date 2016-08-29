@@ -20,7 +20,7 @@
         android:textSize="16sp"
         android:visibility="invisible" />
 
-    <com.qiu.beautifultime.tools.GestureLockView
+    <com.qiu.beautifultime.view.GestureLockView
         android:id="@+id/gestureLockView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

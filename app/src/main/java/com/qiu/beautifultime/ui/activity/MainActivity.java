@@ -40,7 +40,7 @@ public class MainActivity extends AbsBaseActivity {
     protected void initData() {
         MySendBroadTransactin sendBroadTransactin = new MySendBroadTransactin();
         IntentFilter filter = new IntentFilter();
-        filter.addAction("cccc");
+        filter.addAction("com.qiu.beautifultime.mainActivity");
         registerReceiver(sendBroadTransactin, filter);
 
         fragments = new ArrayList<>();

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.qiu.beautifultime.R;
 import com.qiu.beautifultime.app.App;
-import com.qiu.beautifultime.tools.GestureLockView;
+import com.qiu.beautifultime.view.GestureLockView;
 import com.qiu.beautifultime.tools.LockPatternUtils;
 
 /**

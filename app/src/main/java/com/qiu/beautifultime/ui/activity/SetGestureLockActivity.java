@@ -1,6 +1,5 @@
 package com.qiu.beautifultime.ui.activity;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.view.animation.Animation;
@@ -9,7 +8,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 import com.qiu.beautifultime.R;
 import com.qiu.beautifultime.app.App;
-import com.qiu.beautifultime.tools.GestureLockView;
+import com.qiu.beautifultime.view.GestureLockView;
 import com.qiu.beautifultime.tools.LockPatternUtils;
 import com.qiu.beautifultime.ui.adapter.LockAdapter;
 

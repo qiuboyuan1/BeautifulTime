@@ -1,4 +1,4 @@
-package com.qiu.beautifultime.tools;
+package com.qiu.beautifultime.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 
 /**
+ * 自定义进度条
  * Created by dllo on 16/8/17.
  */
 public class MProgressView extends View {

@@ -1,4 +1,4 @@
-package com.qiu.beautifultime.tools;
+package com.qiu.beautifultime.view;
 
 import android.content.Context;
 import android.graphics.Canvas;

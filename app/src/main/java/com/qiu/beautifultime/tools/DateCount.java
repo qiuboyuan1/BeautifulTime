@@ -1,6 +1,7 @@
 package com.qiu.beautifultime.tools;
 
 /**
+ * 计算设置时间距当前的总天数(粗略计算)
  * Created by dllo on 16/8/19.
  */
 public class DateCount {

@@ -1,7 +1,7 @@
 package com.qiu.beautifultime.data;
 
 /**
- * 照片选择的类
+ * 图片选择的类
  * Created by dllo on 16/8/13.
  */
 public class SetPictureData {

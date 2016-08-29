@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.qiu.beautifultime.R;
 import com.qiu.beautifultime.data.ItemTimeData;
 import com.qiu.beautifultime.db.OrmInstence;
-import com.qiu.beautifultime.item.TimeItemTouchHelperCallback;
+import com.qiu.beautifultime.tools.TimeItemTouchHelperCallback;
 import com.qiu.beautifultime.ui.activity.BeautifulTimeChooseActivity;
 import com.qiu.beautifultime.ui.activity.SettingActivity;
 import com.qiu.beautifultime.ui.adapter.TimeItemRecycleViewAdapter;
@@ -69,7 +69,7 @@ public class BeautifulTimeNotesFragment extends AbsBaseFragment implements View.
 
         myBroadCast = new MyBroadCast();
         IntentFilter filter = new IntentFilter();
-        filter.addAction("aa");
+        filter.addAction("com.qiu.beautifultime.notesFragment");
         sContext.registerReceiver(myBroadCast, filter);
 
 
@@ -77,14 +77,10 @@ public class BeautifulTimeNotesFragment extends AbsBaseFragment implements View.
         LinearLayoutManager manager = new LinearLayoutManager(sContext);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recordItem.setLayoutManager(manager);
-        //添加数据
-        List<ItemTimeData> allDatas = OrmInstence.getOrmInstence().serchAllData(ItemTimeData.class);
-        for (int i = 0; i < allDatas.size(); i++) {
-            int pos=allDatas.size() - 1 - i;
-            timeDatas.add(new ItemTimeData(allDatas.get(pos).getTitle(), allDatas.get(pos).getDate(),allDatas.get(pos).getColor(),allDatas.get(pos).getPictureName(),allDatas.get(pos).getRecordTime()));
-        }
-        itemRecycleViewAdapter.setTimeDatas(timeDatas);
-        recordItem.setAdapter(itemRecycleViewAdapter);
+
+        //在加载notesfragment的时候发送广播设置数据
+        Intent intent = new Intent("com.qiu.beautifultime.notesFragment");
+        sContext.sendBroadcast(intent);
 
         //创建我们的ItemTouchHelper并调用attachToRecyclerView(RecyclerView)
         ItemTouchHelper.Callback callback = new TimeItemTouchHelperCallback(itemRecycleViewAdapter);
@@ -142,8 +138,9 @@ public class BeautifulTimeNotesFragment extends AbsBaseFragment implements View.
     @Override
     public void itemClick(int pos) {
         //跳转到showfragment页面
-        Intent intent=new Intent("cccc");
-        intent.putExtra("skipNotesFragment",1);
+        Intent intent = new Intent("com.qiu.beautifultime.mainActivity");
+//        Intent intent = new Intent("cccc");
+        intent.putExtra("skipNotesFragment", 1);
         sContext.sendBroadcast(intent);
         Toast.makeText(sContext, "第" + pos, Toast.LENGTH_SHORT).show();
     }
@@ -161,21 +158,24 @@ public class BeautifulTimeNotesFragment extends AbsBaseFragment implements View.
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        //在每次将要显示此界面的时候刷新一下有没有数据更新
-        itemRecycleViewAdapter.notifyDataSetChanged();
-    }
-
-    @Override
     public void itemLongClick(int pos) {
 
     }
+
+    //接受chooseactivity发送的广播
     public class MyBroadCast extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            //接受chooseactivity发送的广播
+            //每次加载的时候都清空一下集合
+            timeDatas.clear();
+            //添加数据
+            List<ItemTimeData> allDatas = OrmInstence.getOrmInstence().serchAllData(ItemTimeData.class);
+            for (int i = 0; i < allDatas.size(); i++) {
+                int pos = allDatas.size() - 1 - i;
+                timeDatas.add(new ItemTimeData(allDatas.get(pos).getTitle(), allDatas.get(pos).getDate(), allDatas.get(pos).getColor(), allDatas.get(pos).getPictureName(), allDatas.get(pos).getRecordTime()));
+            }
             itemRecycleViewAdapter.setTimeDatas(timeDatas);
+            recordItem.setAdapter(itemRecycleViewAdapter);
             isRecord();
         }
     }

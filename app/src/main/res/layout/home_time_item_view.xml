@@ -9,7 +9,7 @@
         android:layout_alignParentBottom="true"
         android:background="#ffffffff" />
 
-    <com.qiu.beautifultime.tools.MProgressView
+    <com.qiu.beautifultime.view.MProgressView
         android:id="@+id/home_time_item_progress_bar"
         android:layout_width="match_parent"
         android:layout_height="70dp" />

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.qiu.beautifultime.tools.FullScreenVideoView
+    <com.qiu.beautifultime.view.FullScreenVideoView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

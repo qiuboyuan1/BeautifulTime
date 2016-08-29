@@ -4,20 +4,17 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.qiu.beautifultime.R;
 import com.qiu.beautifultime.data.ItemTimeData;
 import com.qiu.beautifultime.db.OrmInstence;
-import com.qiu.beautifultime.item.TimeItemTouchHelperCallback;
-import com.qiu.beautifultime.tools.MProgressView;
-import com.qiu.beautifultime.ui.fragment.BeautifulTimeNotesFragment;
+import com.qiu.beautifultime.tools.TimeItemTouchHelperCallback;
+import com.qiu.beautifultime.view.MProgressView;
 
 import java.util.Collections;
 import java.util.List;
@@ -81,7 +78,7 @@ public class TimeItemRecycleViewAdapter extends RecyclerView.Adapter<TimeItemRec
                 @Override
                 public void onClick(View v) {
                     int pos = holder.getLayoutPosition();
-                    Intent intent = new Intent("xxx");
+                    Intent intent = new Intent("com.qiu.beautifultime.showFragment");
                     intent.putExtra("itemPos",pos);
                     context.sendBroadcast(intent);
                     clickListener.itemClick(pos);
@@ -132,7 +129,7 @@ public class TimeItemRecycleViewAdapter extends RecyclerView.Adapter<TimeItemRec
     public void onItemDismiss(int position) {
         OrmInstence.getOrmInstence().delValueData(ItemTimeData.class, "recordTime", timeDatas.get(position).getRecordTime());
         //通知show界面数据变化
-        Intent intent=new Intent("xxx");
+        Intent intent=new Intent("com.qiu.beautifultime.showFragment");
         context.sendBroadcast(intent);
 
         timeDatas.remove(position);

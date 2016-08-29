@@ -178,12 +178,9 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
                 OrmInstence.getOrmInstence().addOneData(new ItemTimeData(content, chooseDate, color, picture[position], recordTime));
 
                 //发送到notesfragment
-                Intent intents = new Intent("aa");
+                Intent intents = new Intent("com.qiu.beautifultime.notesFragment");
                 intents.putExtra("color", color);
                 sendBroadcast(intents);
-
-
-                Toast.makeText(this, "aaaa", Toast.LENGTH_SHORT).show();
                 BeautifulTimeChooseActivity.this.finish();
                 break;
             case R.id.time_choose_color_tv:

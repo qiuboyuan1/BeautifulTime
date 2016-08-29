@@ -11,6 +11,7 @@ import com.qiu.beautifultime.data.ItemTimeData;
 import java.util.List;
 
 /**
+ * 数据库操作类
  * Created by dllo on 16/8/18.
  */
 public class OrmInstence {

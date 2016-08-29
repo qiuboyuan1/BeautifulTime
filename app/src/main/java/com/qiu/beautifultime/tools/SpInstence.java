@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
+ * sp单例类
  * Created by dllo on 16/8/24.
  */
 public class SpInstence {

@@ -1,6 +1,7 @@
 package com.qiu.beautifultime.data;
 
 /**
+ * 展示图片的show界面数据类
  * Created by dllo on 16/8/16.
  */
 public class ShowPictureData {

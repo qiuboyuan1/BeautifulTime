@@ -78,7 +78,7 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
     protected void initData() {
         myBroadCost = new MyBroadCost();
         IntentFilter filter = new IntentFilter();
-        filter.addAction("xxx");
+        filter.addAction("com.qiu.beautifultime.showFragment");
         sContext.registerReceiver(myBroadCost, filter);
 
         //获取屏幕宽
@@ -143,17 +143,21 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
             case R.id.LlDelete:
                 List<ItemTimeData> itemTimeDatas = OrmInstence.getOrmInstence().serchAllData(ItemTimeData.class);
                 long data = itemTimeDatas.get(position).getRecordTime();
-                Log.d("BeautifulTimeShowFragme", ""+data+"-----"+position);
-                OrmInstence.getOrmInstence().delValueData(ItemTimeData.class,"recordTime",data);
+                Log.d("BeautifulTimeShowFragme", "" + data + "-----" + position);
+                OrmInstence.getOrmInstence().delValueData(ItemTimeData.class, "recordTime", data);
                 //通知show界面数据变化
-                Intent intent2 = new Intent("xxx");
+                Intent intent2 = new Intent("com.qiu.beautifultime.showFragment");
                 sContext.sendBroadcast(intent2);
+                //通知notes界面数据变化
+                Intent notesIntent = new Intent("com.qiu.beautifultime.notesFragment");
+                sContext.sendBroadcast(notesIntent);
+
                 showAnimation.ShowView();
                 break;
             case R.id.LlNew:
                 break;
             case R.id.llReturn:
-                Intent intent1 = new Intent("cccc");
+                Intent intent1 = new Intent("com.qiu.beautifultime.mainActivity");
                 intent1.putExtra("skipNotesFragment", 2);
                 sContext.sendBroadcast(intent1);
                 break;
@@ -165,7 +169,7 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
     public void onResume() {
         super.onResume();
         //通知show界面数据变化
-        Intent intent = new Intent("xxx");
+        Intent intent = new Intent("com.qiu.beautifultime.showFragment");
         sContext.sendBroadcast(intent);
     }
 
@@ -181,6 +185,9 @@ public class BeautifulTimeShowFragment extends AbsBaseFragment implements View.O
         sContext.unregisterReceiver(myBroadCost);
     }
 
+    /**
+     * 接收设置图片的设置
+     */
     public class MyBroadCost extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
