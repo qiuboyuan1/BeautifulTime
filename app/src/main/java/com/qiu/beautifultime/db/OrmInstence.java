@@ -19,6 +19,8 @@ public class OrmInstence {
     private static String DB_NAME = "beautifulTime.db";
     private static LiteOrm liteOrm;
 
+    private OrmInstence() {
+    }
 
     public void setOrmInstence() {
         DataBaseConfig config = new DataBaseConfig(App.sContext);

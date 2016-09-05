@@ -62,7 +62,7 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
     private TextView dateTv;//显示日期
     private String dates;//用于显示在当前的日期按钮上
     private ItemTimeData itemTimeData;
-    private String[] picture = new String[]{"baby.jpg", "birthday.jpg", "sport.jpg", "love.jpg", "school.jpg"};
+    private String[] picture = new String[]{"one.jpg", "two.jpg", "three.jpg", "four.jpg", "five.jpg"};
     private int position;
     private RelativeLayout layout;
     private EditText titleEt;
@@ -120,11 +120,11 @@ public class BeautifulTimeChooseActivity extends AbsBaseActivity implements View
         recyclerView.setLayoutManager(manager);
 
 
-        smailDatas.add(new SetPictureData(R.mipmap.baby_thumb));
-        smailDatas.add(new SetPictureData(R.mipmap.birthday_thumb));
-        smailDatas.add(new SetPictureData(R.mipmap.sport_thumb));
-        smailDatas.add(new SetPictureData(R.mipmap.love_thumb));
-        smailDatas.add(new SetPictureData(R.mipmap.school_thumb));
+        smailDatas.add(new SetPictureData(R.mipmap.a));
+        smailDatas.add(new SetPictureData(R.mipmap.b));
+        smailDatas.add(new SetPictureData(R.mipmap.c));
+        smailDatas.add(new SetPictureData(R.mipmap.d));
+        smailDatas.add(new SetPictureData(R.mipmap.e));
 
         adapter = new OneRecyclerViewAdapter(this, smailDatas);
         recyclerView.setAdapter(adapter);
