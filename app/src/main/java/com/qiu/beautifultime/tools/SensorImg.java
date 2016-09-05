@@ -52,12 +52,13 @@ public class SensorImg implements SensorEventListener {
 
 
         matrix = new Matrix();
-        if (height < bitmapHigth) {
-            matrix.postScale(height / bitmapHigth, height / bitmapHigth);
-        } else if (height >= bitmapHigth) {
-            matrix.postScale(bitmapHigth / height, bitmapHigth / height);
-        }
-//        matrix.postScale(1f, 1f, 0.5f, 0.5f);
+//        if (height < bitmapHigth) {
+//            matrix.postScale(height / bitmapHigth, height / bitmapHigth);
+//        } else if (height >= bitmapHigth) {
+//            matrix.postScale(bitmapHigth / height, bitmapHigth / height);
+//        }
+        matrix.postScale(1.5f, 1.5f, 0.5f, 0.5f);
+        matrix.postTranslate(-540, 0);
         imageView.setImageMatrix(matrix);
         imageView.invalidate();
         imageView.startAnimation(getAnimation(imageView));
@@ -141,8 +142,8 @@ public class SensorImg implements SensorEventListener {
 
     private PointF getLeftPointF() {
         float[] values = new float[9];
-        float[] rightValues = {1f, 0, -width, 0, 1f, -0.25f, 0, 0, 1.0f};
-        float[] leftValues = {1f, 0, 0, 0, 1f, -0.25f, 0, 0, 1.0f};
+        float[] rightValues = {1.5f, 0, -width, 0, 1.5f, -0.25f, 0, 0, 1.0f};
+        float[] leftValues = {1.5f, 0, 0, 0, 1.5f, -0.25f, 0, 0, 1.0f};
 
         matrix.getValues(values);
 

@@ -14,6 +14,8 @@ import com.qiu.beautifultime.R;
 import com.qiu.beautifultime.data.ItemTimeData;
 import com.qiu.beautifultime.db.OrmInstence;
 import com.qiu.beautifultime.tools.TimeItemTouchHelperCallback;
+import com.qiu.beautifultime.tools.VibratorUtil;
+import com.qiu.beautifultime.ui.activity.MainActivity;
 import com.qiu.beautifultime.view.MProgressView;
 
 import java.util.Collections;
@@ -92,10 +94,12 @@ public class TimeItemRecycleViewAdapter extends RecyclerView.Adapter<TimeItemRec
                     int pos = holder.getLayoutPosition();
                     longClickListener.itemLongClick(pos);
                     //长点击动画
-                    ObjectAnimator animator = ObjectAnimator.ofFloat(holder.progressBar, "translationX", 0, -10, 10, -8, 8, -6, 6, -4, 4, -2, 2, 0);
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(holder.progressBar, "translationX", -30, 30, -21, 21, -12, 12,-4, 4, 0);
                     animator.setDuration(200);
                     animator.setInterpolator(new DecelerateInterpolator());
                     animator.start();
+                    //设置震动
+                    VibratorUtil.Vibrate(context,100);
                     return true;
                 }
             });

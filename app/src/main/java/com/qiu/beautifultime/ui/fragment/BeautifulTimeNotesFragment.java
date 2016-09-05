@@ -142,7 +142,6 @@ public class BeautifulTimeNotesFragment extends AbsBaseFragment implements View.
 //        Intent intent = new Intent("cccc");
         intent.putExtra("skipNotesFragment", 1);
         sContext.sendBroadcast(intent);
-        Toast.makeText(sContext, "第" + pos, Toast.LENGTH_SHORT).show();
     }
 
     public void isRecord() {
